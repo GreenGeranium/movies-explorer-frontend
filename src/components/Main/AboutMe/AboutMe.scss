@@ -15,14 +15,67 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    grid-area: title;
 
     &:after {
-      border: 1px solid #545454;
+      border: 0.5px solid #DADADA;
       content: "";
       margin-top: 23px;
       opacity: .7;
     }
   }
 
+  &__content {
+    margin: 66px 0 0 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__description {
+
+  }
+
+  &__avatar {
+    border-radius: 10px;
+    width: 270px;
+    height: 327px;
+    object-fit: contain;
+  }
+
+  &__name {
+    margin: 0 0 18px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 116%;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+  }
+
+  &__profession {
+    margin: 0 0 26px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 111%;
+    color: #FFFFFF;
+  }
+
+  &__biography {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 157%;
+    color: #FFFFFF;
+    max-width: 660px;
+    margin: 0;
+  }
+
+  &__github {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    margin-top: auto;
+  }
 }
