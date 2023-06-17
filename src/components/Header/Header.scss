@@ -4,10 +4,19 @@
   background: #073042;
   padding: 21px 70px;
 
+  &_type_movies {
+    background: #202020;
+    justify-content: space-between;
+  }
+
   .buttons {
     display: flex;
     column-gap: 30px;
     align-items: center;
+
+    &_type_movies {
+      column-gap: 16px;
+    }
 
     &__login {
       background: #3DDC84;
@@ -19,6 +28,7 @@
       font-weight: 500;
       font-size: 12px;
       line-height: 16px;
+      text-decoration: none;
     }
 
     &__register {
@@ -28,6 +38,20 @@
       font-weight: 500;
       font-size: 12px;
       line-height: 16px;
+      text-decoration: none;
+    }
+
+    &__movie {
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 138%;
+      text-align: right;
+      color: #FFFFFF;
+      text-decoration: none;
+
+      &.active {
+        font-weight: 500;
+      }
     }
 
   }
