@@ -1,0 +1,24 @@
+.promo {
+  min-height: 524px;
+  background-image: url("../../../images/promobanner.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 320px 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__title {
+    margin: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 116%;
+    text-align: center;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    max-width: 730px;
+    width: 100%;
+  }
+}

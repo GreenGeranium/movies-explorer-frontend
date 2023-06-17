@@ -1,1 +1,1 @@
-# movies-explorer-frontend
+https://disk.yandex.ru/d/EkSzbSrHmGrP1Q

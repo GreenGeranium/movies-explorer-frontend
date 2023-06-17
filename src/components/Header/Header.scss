@@ -1,0 +1,35 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  background: #073042;
+  padding: 21px 70px;
+
+  .buttons {
+    display: flex;
+    column-gap: 30px;
+    align-items: center;
+
+    &__login {
+      background: #3DDC84;
+      border-radius: 3px;
+      padding: 8px 20px;
+      border: none;
+      cursor: pointer;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    &__register {
+      cursor: pointer;
+      color: #FFFFFF;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+  }
+
+}
