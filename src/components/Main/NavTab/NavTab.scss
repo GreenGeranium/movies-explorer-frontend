@@ -1,0 +1,20 @@
+.navbar {
+  display: flex;
+  margin: 0;
+  list-style: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 123%;
+  align-items: center;
+  justify-content: center;
+  column-gap: 40px;
+  color: #FFFFFF;
+  background: #272727;
+  padding: 24px 0;
+
+  .navbar__link {
+    cursor: pointer;
+    text-decoration-line: underline;
+  }
+}
