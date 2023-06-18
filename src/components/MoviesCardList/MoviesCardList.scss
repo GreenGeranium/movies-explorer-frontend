@@ -1,0 +1,9 @@
+.movieslist {
+  display: grid;
+  padding: 70px 70px;
+  column-gap: 24px;
+  row-gap: 37px;
+  margin: 0;
+  list-style: none;
+  grid-template-columns: repeat(auto-fit, 364px);
+}
