@@ -56,4 +56,22 @@
 
   }
 
+  .account {
+    cursor: pointer;
+    background-repeat: no-repeat;
+    border: 2px solid rgba(170, 170, 170, 0.2);
+    border-radius: 50px;
+    background-color: transparent;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 114%;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 8px 12px;
+    column-gap: 7px;
+  }
+
 }

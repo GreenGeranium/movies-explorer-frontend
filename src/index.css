@@ -6,4 +6,10 @@ body {
   font-family: 'Inter', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #202020;
+}
+
+.text-link {
+  color: inherit;
+  text-decoration: inherit;
 }

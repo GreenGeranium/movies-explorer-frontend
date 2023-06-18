@@ -1,0 +1,59 @@
+.searchform {
+  display: grid;
+  padding: 80px 70px 98px;
+  column-gap: 10px;
+  row-gap: 28px;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+          "input button"
+          "short short"
+          "line line";
+
+  &__shortfilms {
+    display: flex;
+    column-gap: 12px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: #FFFFFF;
+    justify-self: center;
+  }
+
+  &__input {
+    grid-area: input;
+    background: #2F2F2F;
+    border-radius: 8px;
+    border: none;
+    padding: 0 0 0 20px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 129%;
+    color: white;
+  }
+
+
+
+  &__button {
+    padding: 0;
+    width: 44px;
+    cursor: pointer;
+    height: 44px;
+    grid-area: button;
+    background-image: url("../../images/searchicon.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #4285F4;
+    border-radius: 8px;
+    border: none;
+  }
+
+  &:after {
+    border: 0.5px solid #424242;
+    content: "";
+    margin-top: 11px;
+    opacity: 0.7;
+    grid-area: line;
+  }
+}
