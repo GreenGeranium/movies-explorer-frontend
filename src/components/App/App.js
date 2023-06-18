@@ -8,12 +8,12 @@ import Preloader from "../Preloader/Preloader";
 import { useEffect } from "react";
 
 function App() {
-  /*  useEffect(() => {
+  useEffect(() => {
     window.onload = () => {
       const preloader = document.querySelector(".preloader");
       preloader.remove();
     };
-  });*/
+  });
   return (
     <div className="page">
       <Header></Header>

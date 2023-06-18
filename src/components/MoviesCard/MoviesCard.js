@@ -19,7 +19,7 @@ function MoviesCard() {
     <article className="card">
       <img className="card__image" src={picture} />
       <div className="card__description">
-        <h4 className="card__name">Фильм</h4>
+        <h4 className="card__name">33 слова о дизайне</h4>
         {pathname === "/saved-movies" ? (
           <div className="card__trash"></div>
         ) : (

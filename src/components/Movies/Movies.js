@@ -7,6 +7,7 @@ function Movies() {
     <div className="movies">
       <SearchForm></SearchForm>
       <MoviesCardList></MoviesCardList>
+      <button className="movies__showmore">Ещё</button>
     </div>
   );
 }
