@@ -7,6 +7,7 @@ import Movies from "../Movies/Movies";
 import Preloader from "../Preloader/Preloader";
 import { useEffect } from "react";
 import SavedMovies from "../SavedMovies/SavedMovies";
+import Profile from "../Profile/Profile";
 
 function App() {
   useEffect(() => {
@@ -23,7 +24,7 @@ function App() {
         <Route path="/" element={<Main />}></Route>
         <Route path="/movies" element={<Movies />}></Route>
         <Route path="/saved-movies" element={<SavedMovies />}></Route>
-        <Route path="/profile"></Route>
+        <Route path="/profile" element={<Profile />}></Route>
         <Route path="/signin"></Route>
         <Route path="/signup"></Route>
       </Routes>
