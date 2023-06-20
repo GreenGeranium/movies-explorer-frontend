@@ -4,13 +4,17 @@
   margin-top: 246px;
   align-items: center;
 
+  @media screen and (max-width: 930px) {
+    margin-top: 408px;
+  }
+
   &__title {
     font-style: normal;
     font-weight: 400;
     font-size: 140px;
     line-height: 169px;
     margin: 0;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 
   &__subtitle {
@@ -19,7 +23,7 @@
     font-size: 16px;
     line-height: 19px;
     margin: 5px 0 0;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 
   &__button {
@@ -28,7 +32,7 @@
     font-size: 14px;
     line-height: 17px;
     text-align: center;
-    color: #4285F4;
+    color: #4285f4;
     margin: 184px 0 0;
   }
 }

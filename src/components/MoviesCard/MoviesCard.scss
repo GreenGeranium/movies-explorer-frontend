@@ -1,6 +1,6 @@
 .card {
   background: #222222;
-  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
   border-radius: 6px;
   position: relative;
   display: flex;
@@ -11,7 +11,8 @@
   }
 
   &__image {
-
+    width: 100%;
+    object-fit: contain;
   }
 
   &__description {
@@ -20,6 +21,10 @@
     position: relative;
     padding: 16px;
     cursor: pointer;
+
+    @media screen and (max-width: 785px) {
+      padding: 14px;
+    }
   }
 
   &__name {
@@ -27,14 +32,14 @@
     font-weight: 500;
     font-size: 13px;
     line-height: 16px;
-    color: #FFFFFF;
+    color: #ffffff;
     margin: 0;
   }
 
   &__trash {
     position: absolute;
-    right: 16px;
-    top: 16px;
+    right: 14px;
+    top: 14px;
     background-image: url("../../images/trash.svg");
     background-repeat: no-repeat;
     background-color: transparent;
@@ -48,8 +53,8 @@
     width: 14px;
     height: 12px;
     border: none;
-    right: 16px;
-    top: 19px;
+    right: 14px;
+    top: 17px;
     cursor: pointer;
     background-color: transparent;
     background-repeat: no-repeat;
@@ -67,7 +72,10 @@
     font-weight: 400;
     font-size: 11px;
     line-height: 13px;
-    color: #8B8B8B;
-  }
+    color: #8b8b8b;
 
+    @media screen and (max-width: 785px) {
+      margin: 15px 0 0;
+    }
+  }
 }

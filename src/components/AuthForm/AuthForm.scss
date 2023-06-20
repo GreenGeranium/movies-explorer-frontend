@@ -5,13 +5,17 @@
   width: 100%;
   margin: 70px auto;
 
+  @media screen and (max-width: 785px) {
+    margin-top: 232px;
+  }
+
   &__title {
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
     line-height: 29px;
     margin: 40px 0;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 
   &__form {
@@ -20,6 +24,10 @@
     align-items: center;
     max-width: 410px;
     width: 100%;
+
+    @media screen and (max-width: 785px) {
+      max-width: 396px;
+    }
   }
 
   &__input {
@@ -31,11 +39,11 @@
     font-size: 14px;
     line-height: 17px;
     padding: 0;
-    color: #FFFFFF;
+    color: #ffffff;
     width: 100%;
 
-    &:focus {
-      outline: none;
+    @media screen and (max-width: 785px) {
+      font-weight: 400;
     }
   }
 
@@ -50,14 +58,18 @@
     }
 
     &:after {
-      border: 0.5px solid #424242;;
+      border: 0.5px solid #424242;
       content: "";
       margin-top: 16px;
       margin-bottom: 17px;
       opacity: 0.7;
       grid-area: line;
-    }
 
+      @media screen and (max-width: 785px) {
+        margin-top: 10px;
+        margin-bottom: 24px;
+      }
+    }
   }
 
   &__error {
@@ -66,14 +78,17 @@
     font-weight: 400;
     font-size: 10px;
     line-height: 12px;
-    color: #EE3465;
+    color: #ee3465;
     top: 56px;
     margin: 0;
+
+    @media screen and (max-width: 785px) {
+      top: 50px;
+    }
   }
 
-
   &__button {
-    background: #4285F4;
+    background: #4285f4;
     border-radius: 3px;
     border: none;
     cursor: pointer;
@@ -82,19 +97,22 @@
     font-size: 14px;
     line-height: 17px;
     text-align: center;
-    color: #FFFFFF;
+    color: #ffffff;
     margin: 221px 0 0;
     padding: 13px 0 15px;
     width: 100%;
-  }
 
+    &_type_register {
+      margin: 152px 0 0;
+    }
+  }
 
   &__placeholder {
     font-style: normal;
     font-weight: 400;
     font-size: 10px;
     line-height: 12px;
-    color: #8B8B8B;
+    color: #8b8b8b;
     margin: 0 0 5px;
     text-align: left;
   }
@@ -105,11 +123,10 @@
     font-size: 14px;
     line-height: 17px;
     margin: 16px 0 0;
-    color: #8B8B8B;
+    color: #8b8b8b;
   }
 
   &__link {
-    color: #4285F4;
+    color: #4285f4;
   }
-
 }

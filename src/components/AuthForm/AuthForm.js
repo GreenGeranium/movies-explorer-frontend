@@ -20,8 +20,12 @@ function AuthForm(props) {
         }}
       >
         {props.children}
-        <button className="authform__button">
-          {pathname === "/signin" ? "Войти" : "Регистрация"}
+        <button
+          className={`authform__button ${
+            pathname === "/signup" ? "authform__button_type_register" : ""
+          }`}
+        >
+          {pathname === "/signin" ? "Войти" : "Зарегистрироваться"}
         </button>
         <p className="authform__redirect">
           {pathname === "/signin"

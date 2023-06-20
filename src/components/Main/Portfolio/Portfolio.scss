@@ -2,12 +2,16 @@
   padding: 100px 70px 125px;
   background: #202020;
 
+  @media screen and (max-width: 785px) {
+    padding: 90px 50px;
+  }
+
   &__title {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 111%;
-    color: #8B8B8B;
+    color: #8b8b8b;
     margin: 0;
   }
 
@@ -26,13 +30,18 @@
     font-size: 30px;
     line-height: 167%;
     letter-spacing: -0.04em;
-    color: #FFFFFF;
+    color: #ffffff;
     display: flex;
     flex-direction: column;
     cursor: pointer;
     background-image: url("../../../images/linkicon.svg");
     background-repeat: no-repeat;
     background-position: 99% 37%;
+
+    @media screen and (max-width: 785px) {
+      font-size: 28px;
+      line-height: 179%;
+    }
 
     &:last-of-type {
       &:after {

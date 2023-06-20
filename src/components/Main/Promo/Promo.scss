@@ -9,6 +9,10 @@
   align-items: center;
   justify-content: center;
 
+  @media screen and (max-width: 785px) {
+    min-height: 784px;
+  }
+
   &__title {
     margin: 0;
     font-style: normal;
@@ -17,7 +21,7 @@
     line-height: 116%;
     text-align: center;
     letter-spacing: -0.04em;
-    color: #FFFFFF;
+    color: #ffffff;
     max-width: 730px;
     width: 100%;
   }

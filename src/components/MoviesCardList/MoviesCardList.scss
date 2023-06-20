@@ -7,4 +7,11 @@
   margin: 0;
   list-style: none;
   grid-template-columns: repeat(auto-fit, 364px);
+
+  @media screen and (max-width: 930px) {
+    padding: 70px 30px 30px;
+    column-gap: 30px;
+    row-gap: 30px;
+    grid-template-columns: repeat(auto-fit, 339px);
+  }
 }

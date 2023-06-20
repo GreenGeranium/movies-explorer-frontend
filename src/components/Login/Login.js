@@ -1,4 +1,3 @@
-import "./Login.scss";
 import AuthForm from "../AuthForm/AuthForm";
 import { useForm } from "react-hook-form";
 

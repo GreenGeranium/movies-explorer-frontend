@@ -30,7 +30,7 @@ function MoviesCard() {
             onClick={handleLike}
           ></button>
         )}
-        <p className="card__length">1 ч 47 мин</p>
+        <p className="card__length">1ч 47м</p>
       </div>
     </article>
   );

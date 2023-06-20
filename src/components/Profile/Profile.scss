@@ -7,6 +7,11 @@
   row-gap: 123px;
   align-items: center;
 
+  @media screen and (max-width: 785px) {
+    padding: 236px 0 269px;
+    row-gap: 96px;
+  }
+
   &__title {
     margin: 0;
     font-style: normal;
@@ -14,8 +19,7 @@
     font-size: 24px;
     line-height: 29px;
     text-align: center;
-    color: #FFFFFF;
-
+    color: #ffffff;
   }
 
   &__form {
@@ -36,13 +40,9 @@
     line-height: 13px;
     text-align: right;
     padding: 0;
-    color: #FFFFFF;
+    color: #ffffff;
     width: 66%;
     align-self: end;
-
-    &:focus {
-      outline: none;
-    }
   }
 
   &__label {
@@ -56,14 +56,13 @@
     }
 
     &:after {
-      border: 0.5px solid #424242;;
+      border: 0.5px solid #424242;
       content: "";
       margin-top: 16px;
       margin-bottom: 17px;
       opacity: 0.7;
       grid-area: line;
     }
-
   }
 
   &__placeholder {
@@ -75,8 +74,7 @@
     line-height: 13px;
     margin: 0;
     text-align: left;
-    color: #FFFFFF;
-
+    color: #ffffff;
   }
 
   &__edit {
@@ -85,11 +83,15 @@
     font-size: 13px;
     line-height: 16px;
     text-align: center;
-    color: #FFFFFF;
+    color: #ffffff;
     margin: 220px 0 0;
     border: none;
     background: transparent;
     cursor: pointer;
+
+    @media screen and (max-width: 785px) {
+      margin-top: 210px;
+    }
   }
 
   &__exit {
@@ -99,7 +101,7 @@
     line-height: 16px;
     margin: 16px 0 0;
     text-align: center;
-    color: #EE3465;
+    color: #ee3465;
     border: none;
     background: transparent;
     cursor: pointer;

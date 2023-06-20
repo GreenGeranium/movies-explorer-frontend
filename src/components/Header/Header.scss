@@ -3,14 +3,94 @@
   justify-content: space-between;
   background: #073042;
   padding: 21px 70px;
-
-  &_state_hidden {
-    display: none;
-  }
+  align-items: center;
 
   &_type_movies {
     background: #202020;
     justify-content: space-between;
+  }
+
+  @media screen and (max-width: 785px) {
+    padding: 21px 30px;
+  }
+
+  &__overlay {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 15;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: 0.5s;
+  }
+
+  &__navigation {
+    display: none;
+    background: #202020;
+    max-width: 520px;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 20;
+    row-gap: 28px;
+
+    @media screen and (max-width: 785px) {
+      &_active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 159px 0 90px;
+        box-sizing: border-box;
+        transition: 0.5s;
+      }
+    }
+  }
+
+  &__burger {
+    display: none;
+    width: 22px;
+    z-index: 22;
+
+    @media screen and (max-width: 785px) {
+      display: flex;
+      flex-direction: column;
+      row-gap: 4px;
+      cursor: pointer;
+    }
+
+    &_active {
+      &:before {
+        transform: translateY(5px) rotate(135deg);
+      }
+
+      &:after {
+        transform: translateY(-9px) rotate(-135deg);
+      }
+
+      .header__supplement {
+        transform: scale(0);
+      }
+    }
+
+    &:before,
+    &:after,
+    .header__supplement {
+      background: white;
+      content: "";
+      display: block;
+      height: 3px;
+      margin: 0;
+      transition: 0.5s;
+    }
+  }
+
+  &_state_hidden {
+    display: none;
   }
 
   .buttons {
@@ -18,13 +98,21 @@
     column-gap: 30px;
     align-items: center;
 
+    &_account {
+      margin: auto 0 0 0;
+    }
+
     &_type_movies {
       column-gap: 16px;
       margin-left: 70px;
+
+      @media screen and (max-width: 785px) {
+        display: none;
+      }
     }
 
     &__login {
-      background: #3DDC84;
+      background: #3ddc84;
       border-radius: 3px;
       padding: 8px 20px;
       border: none;
@@ -38,7 +126,7 @@
 
     &__register {
       cursor: pointer;
-      color: #FFFFFF;
+      color: #ffffff;
       font-style: normal;
       font-weight: 500;
       font-size: 12px;
@@ -46,19 +134,41 @@
       text-decoration: none;
     }
 
+    &__movies {
+      @media screen and (max-width: 785px) {
+        display: none;
+      }
+    }
+
     &__movie {
       font-weight: 400;
       font-size: 13px;
       line-height: 138%;
       text-align: right;
-      color: #FFFFFF;
+      color: #ffffff;
       text-decoration: none;
+
+      @media screen and (max-width: 785px) {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+      }
 
       &.active {
         font-weight: 500;
+
+        @media screen and (max-width: 785px) {
+          display: flex;
+          flex-direction: column;
+
+          &:after {
+            border: 0.5px solid white;
+            content: "";
+            margin-top: 4px;
+          }
+        }
       }
     }
-
   }
 
   .account {
@@ -73,10 +183,17 @@
     line-height: 114%;
     display: flex;
     align-items: center;
-    color: #FFFFFF;
+    color: #ffffff;
     text-decoration: none;
     padding: 8px 12px;
     column-gap: 7px;
-  }
 
+    @media screen and (max-width: 785px) {
+      display: none;
+
+      &_type_burger {
+        display: flex;
+      }
+    }
+  }
 }
