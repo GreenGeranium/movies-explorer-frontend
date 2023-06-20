@@ -39,6 +39,10 @@
     color: #FFFFFF;
     width: 66%;
     align-self: end;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   &__label {

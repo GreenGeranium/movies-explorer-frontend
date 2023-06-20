@@ -1,19 +1,23 @@
 import "./AuthForm.scss";
-import logo from "../../images/logomain.svg";
 import { Link, useLocation } from "react-router-dom";
+import LogoIcon from "../LogoIcon/LogoIcon";
 
 function AuthForm(props) {
   const { pathname } = useLocation();
 
   return (
     <div className="authform">
-      <img src={logo} alt="Логотип" className="authform__image" />
+      <LogoIcon></LogoIcon>
       <h2 className="authform__title">{props.title}</h2>
       <form
         className="authform__form"
         method="get"
         name={props.formName}
         id={props.formName}
+        onSubmit={(evt) => {
+          evt.preventDefault();
+          props.handleSubmit();
+        }}
       >
         {props.children}
         <button className="authform__button">
