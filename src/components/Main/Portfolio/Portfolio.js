@@ -1,13 +1,36 @@
 import "./Portfolio.scss";
+import { Link } from "react-router-dom";
 
 function Portfolio() {
   return (
     <section className="portfolio">
       <h3 className="portfolio__title">Портфолио</h3>
       <ul className="portfolio__links">
-        <li className="portfolio__link">Статичный сайт</li>
-        <li className="portfolio__link">Адаптивный сайт</li>
-        <li className="portfolio__link">Одностраничное приложение</li>
+        <li className="portfolio__link">
+          <a
+            className="text-link"
+            target="_blank"
+            rel="noreferrer"
+            href={"//greengeranium.github.io/how-to-learn/"}
+          >
+            Статичный сайт
+          </a>
+        </li>
+        <li className="portfolio__link">
+          <a
+            className="text-link"
+            target="_blank"
+            rel="noreferrer"
+            href={"//greengeranium.github.io/russian-travel/"}
+          >
+            Адаптивный сайт
+          </a>
+        </li>
+        <li className="portfolio__link">
+          <Link className="text-link" to={"/movies"}>
+            Одностраничное приложение
+          </Link>
+        </li>
       </ul>
     </section>
   );
