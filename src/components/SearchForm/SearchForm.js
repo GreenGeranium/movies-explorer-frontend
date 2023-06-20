@@ -3,8 +3,19 @@ import FilterCheckbox from "./FilterCheckbox/FilterCheckbox";
 
 function SearchForm() {
   return (
-    <form className="searchform">
-      <input type="text" className="searchform__input" placeholder="Фильм" />
+    <form
+      className="searchform"
+      method="get"
+      name="search-form"
+      id="search-form"
+    >
+      <input
+        type="text"
+        className="searchform__input"
+        placeholder="Фильм"
+        name="search-field"
+        id="search-field"
+      />
       <label className="searchform__shortfilms">
         <FilterCheckbox></FilterCheckbox>
         <span className="filtercheckbox__name">Короткометражки</span>
