@@ -8,6 +8,7 @@ import Preloader from "../Preloader/Preloader";
 import { useEffect } from "react";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
+import PageNotFound from "../PageNotFound/PageNotFound";
 
 function App() {
   useEffect(() => {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/signin"></Route>
         <Route path="/signup"></Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer></Footer>
     </div>

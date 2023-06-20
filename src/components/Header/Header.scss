@@ -4,6 +4,10 @@
   background: #073042;
   padding: 21px 70px;
 
+  &_state_hidden {
+    display: none;
+  }
+
   &_type_movies {
     background: #202020;
     justify-content: space-between;
