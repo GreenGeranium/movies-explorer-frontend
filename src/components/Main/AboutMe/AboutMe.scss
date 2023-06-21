@@ -44,6 +44,7 @@
     margin: 66px 0 0 0;
     display: flex;
     justify-content: space-between;
+    column-gap: 20px;
 
     @media screen and (max-width: 550px) {
       margin-top: 60px;

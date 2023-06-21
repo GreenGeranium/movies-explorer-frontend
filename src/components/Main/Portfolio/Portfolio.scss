@@ -51,6 +51,10 @@
     background-repeat: no-repeat;
     background-position: 99% 37%;
 
+    &:hover {
+      opacity: 0.8;
+    }
+
     @media screen and (max-width: 785px) {
       font-size: 28px;
       line-height: 179%;
