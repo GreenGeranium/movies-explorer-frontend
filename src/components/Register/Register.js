@@ -21,7 +21,9 @@ function Register() {
             required: "Поле обязательно",
           })}
           type="text"
-          className="authform__input"
+          className={`authform__input ${
+            errors.name && "authform__input_type_error"
+          }`}
           id="name-input"
         />
         {errors.name && (
@@ -43,7 +45,9 @@ function Register() {
             },
           })}
           type="text"
-          className="authform__input"
+          className={`authform__input ${
+            errors.email && "authform__input_type_error"
+          }`}
           id="email-input"
         />
         {errors.email && (
@@ -61,7 +65,9 @@ function Register() {
             },
           })}
           type="password"
-          className="authform__input"
+          className={`authform__input ${
+            errors.password && "authform__input_type_error"
+          }`}
           id="password-input"
         />
         {errors.password && (

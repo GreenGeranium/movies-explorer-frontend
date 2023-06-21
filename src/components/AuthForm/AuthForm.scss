@@ -57,6 +57,10 @@
     @media screen and (max-width: 785px) {
       font-weight: 400;
     }
+
+    &_type_error {
+      color: #ee3465;
+    }
   }
 
   &__label {

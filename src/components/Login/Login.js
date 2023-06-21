@@ -33,7 +33,9 @@ function Login() {
             },
           })}
           type="text"
-          className="authform__input"
+          className={`authform__input ${
+            errors.email && "authform__input_type_error"
+          }`}
           id="email-input"
           placeholder="Введите email"
         />
@@ -52,7 +54,9 @@ function Login() {
             },
           })}
           type="password"
-          className="authform__input"
+          className={`authform__input ${
+            errors.password && "authform__input_type_error"
+          }`}
           id="password-input"
           placeholder="Введите пароль"
         />
