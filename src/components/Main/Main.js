@@ -5,14 +5,23 @@ import AboutProject from "./AboutProject/AboutProject";
 import Techs from "./Techs/Techs";
 import AboutMe from "./AboutMe/AboutMe";
 import Portfolio from "./Portfolio/Portfolio";
-function Main() {
+import { useRef } from "react";
+function Main(props) {
+  const projectRef = useRef();
+  const techsRef = useRef();
+  const meRef = useRef();
+
   return (
     <main className="main">
       <Promo></Promo>
-      <NavTab></NavTab>
-      <AboutProject></AboutProject>
-      <Techs></Techs>
-      <AboutMe></AboutMe>
+      <NavTab
+        projectRef={projectRef}
+        techsRef={techsRef}
+        meRef={meRef}
+      ></NavTab>
+      <AboutProject projectRef={projectRef}></AboutProject>
+      <Techs techsRef={techsRef}></Techs>
+      <AboutMe meRef={meRef}></AboutMe>
       <Portfolio></Portfolio>
     </main>
   );

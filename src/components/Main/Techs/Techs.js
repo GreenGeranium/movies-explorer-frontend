@@ -1,8 +1,8 @@
 import "./Techs.scss";
 
-function Techs() {
+function Techs(props) {
   return (
-    <section className="techs" id="techs">
+    <section className="techs" id="techs" ref={props.techsRef}>
       <h2 className="techs__title">Технологии</h2>
       <div className="techs__content">
         <h3 className="techs__section-title">7 технологий</h3>

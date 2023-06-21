@@ -1,9 +1,9 @@
 import "./AboutMe.scss";
 import avatar from "../../../images/avatar.svg";
 
-function AboutMe() {
+function AboutMe(props) {
   return (
-    <section className="aboutme">
+    <section className="aboutme" ref={props.meRef}>
       <h2 className="aboutme__title">Студент</h2>
       <div className="aboutme__content">
         <div className="aboutme__description">
