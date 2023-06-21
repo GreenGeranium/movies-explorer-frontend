@@ -1,0 +1,80 @@
+.portfolio {
+  padding: 100px 70px 125px;
+  background: #202020;
+
+  @media screen and (max-width: 785px) {
+    padding: 90px 50px;
+  }
+
+  @media screen and (max-width: 337px) {
+    padding: 70px 14px;
+  }
+
+  &__title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 111%;
+    color: #8b8b8b;
+    margin: 0;
+
+    @media screen and (max-width: 337px) {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+
+  &__links {
+    margin: 50px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+
+    @media screen and (max-width: 337px) {
+      margin-top: 40px;
+    }
+  }
+
+  &__link {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 167%;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    background-image: url("../../../images/linkicon.svg");
+    background-repeat: no-repeat;
+    background-position: 99% 37%;
+
+    @media screen and (max-width: 785px) {
+      font-size: 28px;
+      line-height: 179%;
+    }
+
+    @media screen and (max-width: 337px) {
+      font-size: 18px;
+      line-height: 28px;
+      background-position: 99% 0%;
+      background-size: 9px 7px;
+    }
+
+    &:last-of-type {
+      &:after {
+        border: none;
+        margin: 0;
+      }
+    }
+
+    &:after {
+      border: 0.5px solid #424242;
+      content: "";
+      margin-top: 19px;
+      opacity: 0.7;
+    }
+  }
+}

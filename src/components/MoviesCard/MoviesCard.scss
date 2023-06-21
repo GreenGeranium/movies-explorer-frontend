@@ -1,0 +1,92 @@
+.card {
+  background: #222222;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &:hover &__trash {
+    visibility: visible;
+  }
+
+  &__image {
+    width: 100%;
+    object-fit: contain;
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 16px;
+    cursor: pointer;
+
+    @media screen and (max-width: 785px) {
+      padding: 14px;
+    }
+  }
+
+  &__name {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #ffffff;
+    margin: 0;
+
+    @media screen and (max-width: 337px) {
+      font-size: 12px;
+      line-height: 15px;
+    }
+  }
+
+  &__trash {
+    position: absolute;
+    right: 14px;
+    top: 14px;
+    background-image: url("../../images/trash.svg");
+    background-repeat: no-repeat;
+    background-color: transparent;
+    width: 6.84px;
+    height: 6.72px;
+    visibility: hidden;
+  }
+
+  &__like {
+    position: absolute;
+    width: 14px;
+    height: 12px;
+    border: none;
+    right: 14px;
+    top: 17px;
+    cursor: pointer;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-image: url("../../images/like.svg");
+
+    &_active {
+      background-image: url("../../images/like_active.svg");
+      transition: 0.5s;
+    }
+  }
+
+  &__length {
+    margin: 17px 0 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    color: #8b8b8b;
+
+    @media screen and (max-width: 785px) {
+      margin-top: 15px;
+    }
+
+    @media screen and (max-width: 337px) {
+      margin-top: 14px;
+      font-size: 10px;
+      line-height: 12px;
+    }
+  }
+}

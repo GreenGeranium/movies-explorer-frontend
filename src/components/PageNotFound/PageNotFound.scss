@@ -1,0 +1,59 @@
+.pagenotfound {
+  display: flex;
+  flex-direction: column;
+  margin-top: 246px;
+  align-items: center;
+
+  @media screen and (max-width: 930px) {
+    margin-top: 408px;
+  }
+
+  @media screen and (max-width: 337px) {
+    margin-top: 329px;
+  }
+
+  &__title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 140px;
+    line-height: 169px;
+    margin: 0;
+    color: #ffffff;
+
+    @media screen and (max-width: 337px) {
+      font-size: 80px;
+      line-height: 97px;
+    }
+  }
+
+  &__subtitle {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 5px 0 0;
+    color: #ffffff;
+
+    @media screen and (max-width: 337px) {
+      font-size: 12px;
+      line-height: 15px;
+      margin-top: 10px;
+    }
+  }
+
+  &__button {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #4285f4;
+    margin: 184px 0 0;
+
+    @media screen and (max-width: 337px) {
+      margin-top: 284px;
+      font-size: 12px;
+      line-height: 15px;
+    }
+  }
+}

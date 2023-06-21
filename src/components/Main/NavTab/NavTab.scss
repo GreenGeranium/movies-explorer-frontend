@@ -1,0 +1,31 @@
+.navbar {
+  display: flex;
+  margin: 0;
+  list-style: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 123%;
+  align-items: center;
+  justify-content: center;
+  column-gap: 40px;
+  color: #ffffff;
+  background: #272727;
+  padding: 24px 0;
+
+  @media screen and (max-width: 785px) {
+    line-height: 7px;
+  }
+
+  @media screen and (max-width: 337px) {
+    font-size: 11px;
+    line-height: 16px;
+    column-gap: 24px;
+    padding: 25px 0;
+  }
+
+  .navbar__link {
+    cursor: pointer;
+    text-decoration-line: underline;
+  }
+}

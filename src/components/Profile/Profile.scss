@@ -1,0 +1,129 @@
+.profile {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  padding: 74px 0 70px;
+  row-gap: 123px;
+  align-items: center;
+
+  @media screen and (max-width: 785px) {
+    padding: 236px 0 269px;
+    row-gap: 96px;
+  }
+
+  @media screen and (max-width: 500px) {
+    padding: 70px 30px 40px;
+    row-gap: 80px;
+  }
+
+  &__title {
+    margin: 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 410px;
+    width: 100%;
+
+    @media screen and (max-width: 337px) {
+      max-width: unset;
+    }
+  }
+
+  &__input {
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
+    padding: 0;
+    color: #ffffff;
+    width: 66%;
+    align-self: end;
+  }
+
+  &__label {
+    display: flex;
+    width: 100%;
+    position: relative;
+    flex-direction: column;
+
+    &:last-of-type:after {
+      content: unset;
+    }
+
+    &:after {
+      border: 0.5px solid #424242;
+      content: "";
+      margin-top: 16px;
+      margin-bottom: 17px;
+      opacity: 0.7;
+      grid-area: line;
+    }
+  }
+
+  &__placeholder {
+    font-style: normal;
+    position: absolute;
+    width: 34%;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    margin: 0;
+    text-align: left;
+    color: #ffffff;
+  }
+
+  &__edit {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    color: #ffffff;
+    margin: 220px 0 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    @media screen and (max-width: 785px) {
+      margin-top: 210px;
+    }
+
+    @media screen and (max-width: 337px) {
+      margin-top: 379px;
+      font-size: 12px;
+      line-height: 15px;
+    }
+  }
+
+  &__exit {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    margin: 16px 0 0;
+    text-align: center;
+    color: #ee3465;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    @media screen and (max-width: 337px) {
+      font-size: 12px;
+      line-height: 15px;
+    }
+  }
+}

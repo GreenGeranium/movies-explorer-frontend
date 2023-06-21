@@ -1,0 +1,84 @@
+.searchform {
+  display: grid;
+  align-items: center;
+  padding: 80px 70px 0;
+  column-gap: 10px;
+  row-gap: 28px;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "input button"
+    "short short"
+    "line line";
+
+  @media screen and (max-width: 785px) {
+    padding: 80px 30px 0;
+    row-gap: 40px;
+  }
+
+  @media screen and (max-width: 337px) {
+    padding: 80px 14px 0;
+    row-gap: 46px;
+  }
+
+  &__shortfilms {
+    display: flex;
+    column-gap: 12px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: #ffffff;
+    justify-self: center;
+    grid-column: span 2;
+
+    @media screen and (max-width: 337px) {
+      row-gap: 13px;
+      font-size: 11px;
+      line-height: 18px;
+    }
+  }
+
+  &__input {
+    grid-area: input;
+    background: #2f2f2f;
+    border-radius: 8px;
+    border: none;
+    padding: 16px 0 16px 20px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 129%;
+    color: white;
+
+    @media screen and (max-width: 337px) {
+      padding: 13px 0 13px 13px;
+    }
+  }
+
+  &__button {
+    padding: 0;
+    width: 44px;
+    cursor: pointer;
+    height: 44px;
+    grid-area: button;
+    background-image: url("../../images/searchicon.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #4285f4;
+    border-radius: 8px;
+    border: none;
+  }
+
+  &:after {
+    border: 0.5px solid #424242;
+    content: "";
+    margin-top: 11px;
+    margin-bottom: 10px;
+    opacity: 0.7;
+    grid-area: line;
+
+    @media screen and (max-width: 785px) {
+      margin-top: -9px;
+    }
+  }
+}

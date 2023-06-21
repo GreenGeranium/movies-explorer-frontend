@@ -1,0 +1,25 @@
+.movies {
+  flex: 1;
+
+  .movies__showmore {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    background-color: transparent;
+    padding: 11px 0 9px;
+    border: 2px solid rgba(170, 170, 170, 0.2);
+    border-radius: 10px;
+    margin: 50px auto 80px;
+    max-width: 320px;
+    width: 100%;
+    justify-content: center;
+
+    @media screen and (max-width: 337px) {
+    }
+  }
+}
