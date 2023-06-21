@@ -18,8 +18,10 @@
     max-width: 320px;
     width: 100%;
     justify-content: center;
+    cursor: pointer;
 
-    @media screen and (max-width: 337px) {
+    &:hover {
+      opacity: 0.8;
     }
   }
 }

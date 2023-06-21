@@ -118,6 +118,10 @@
     padding: 13px 0 15px;
     width: 100%;
 
+    &:hover {
+      opacity: 0.8;
+    }
+
     @media screen and (max-width: 337px) {
       margin-top: 309px;
       font-size: 12px;
@@ -161,5 +165,9 @@
 
   &__link {
     color: #4285f4;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 }

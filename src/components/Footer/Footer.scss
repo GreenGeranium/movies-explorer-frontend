@@ -87,6 +87,10 @@
     line-height: 16px;
     color: #ffffff;
 
+    &:hover {
+      opacity: 0.8;
+    }
+
     @media screen and (max-width: 337px) {
       font-size: 12px;
       line-height: 15px;

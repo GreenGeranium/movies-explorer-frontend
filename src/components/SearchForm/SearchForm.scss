@@ -67,6 +67,10 @@
     background-color: #4285f4;
     border-radius: 8px;
     border: none;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   &:after {
