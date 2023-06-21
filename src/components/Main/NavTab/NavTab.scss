@@ -17,6 +17,13 @@
     line-height: 7px;
   }
 
+  @media screen and (max-width: 337px) {
+    font-size: 11px;
+    line-height: 16px;
+    column-gap: 24px;
+    padding: 25px 0;
+  }
+
   .navbar__link {
     cursor: pointer;
     text-decoration-line: underline;

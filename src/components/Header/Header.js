@@ -16,42 +16,44 @@ function Header() {
         pathname === "/profile") && (
         <header className="header header_type_movies">
           <LogoIcon></LogoIcon>
-          <div className="buttons buttons_type_movies">
-            <NavLink to="/movies" className="buttons__movie">
+          <div className="links links_type_movies">
+            <NavLink to="/movies" className="links__movie">
               Фильмы
             </NavLink>
-            <NavLink to="/saved-movies" className="buttons__movie">
+            <NavLink to="/saved-movies" className="links__movie">
               Сохраненные фильмы
             </NavLink>
           </div>
           <div className={isBurgerOpen ? "header__overlay" : ""}></div>
+          <Link className="text-link" to="/profile">
+            <button className="account">
+              <img src={accounticon} alt="Иконка аккаунта" />
+              Аккаунт
+            </button>
+          </Link>
           <div
             className={`header__navigation ${
               isBurgerOpen ? "header__navigation_active" : ""
             }`}
           >
-            <NavLink to="/" className="buttons__movie">
-              Главная
-            </NavLink>
-            <NavLink to="/movies" className="buttons__movie">
-              Фильмы
-            </NavLink>
-            <NavLink to="/saved-movies" className="buttons__movie">
-              Сохраненные фильмы
-            </NavLink>
-            <Link className="text-link buttons__account" to="/profile">
+            <div className="links links_position_navigation">
+              <NavLink to="/" className="links__movie">
+                Главная
+              </NavLink>
+              <NavLink to="/movies" className="links__movie">
+                Фильмы
+              </NavLink>
+              <NavLink to="/saved-movies" className="links__movie">
+                Сохраненные фильмы
+              </NavLink>
+            </div>
+            <Link className="text-link" to="/profile">
               <button className="account account_type_burger">
-                <img src={accounticon} />
+                <img src={accounticon} alt="Иконка аккаунта" />
                 Аккаунт
               </button>
             </Link>
           </div>
-          <Link className="text-link" to="/profile">
-            <button className="account">
-              <img src={accounticon} />
-              Аккаунт
-            </button>
-          </Link>
           <div
             className={`header__burger ${
               isBurgerOpen ? "header__burger_active" : ""
@@ -67,12 +69,12 @@ function Header() {
       {pathname === "/" && (
         <header className="header">
           <LogoIcon></LogoIcon>
-          <div className="buttons">
-            <Link to="/signup" className="buttons__register">
+          <div className="links">
+            <Link to="/signup" className="links__register">
               Регистрация
             </Link>
             <Link to="/signin">
-              <button className="buttons__login">Войти</button>
+              <button className="links__login">Войти</button>
             </Link>
           </div>
         </header>

@@ -17,7 +17,11 @@ function MoviesCard() {
 
   return (
     <article className="card">
-      <img className="card__image" src={picture} />
+      <img
+        className="card__image"
+        alt='Постер фильма "33 слова о дизайне"'
+        src={picture}
+      />
       <div className="card__description">
         <h4 className="card__name">33 слова о дизайне</h4>
         {pathname === "/saved-movies" ? (

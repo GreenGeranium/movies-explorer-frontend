@@ -18,7 +18,7 @@ function SearchForm() {
       />
       <label className="searchform__shortfilms">
         <FilterCheckbox></FilterCheckbox>
-        <span className="filtercheckbox__name">Короткометражки</span>
+        <span>Короткометражки</span>
       </label>
       <button className="searchform__button"></button>
     </form>

@@ -5,6 +5,10 @@
   padding: 21px 70px;
   align-items: center;
 
+  &_state_hidden {
+    display: none;
+  }
+
   &_type_movies {
     background: #202020;
     justify-content: space-between;
@@ -12,6 +16,10 @@
 
   @media screen and (max-width: 785px) {
     padding: 21px 30px;
+  }
+
+  @media screen and (max-width: 337px) {
+    padding: 18px 14px;
   }
 
   &__overlay {
@@ -24,6 +32,10 @@
     z-index: 15;
     background-color: rgba(0, 0, 0, 0.3);
     transition: 0.5s;
+
+    @media screen and (max-width: 337px) {
+      content: none;
+    }
   }
 
   &__navigation {
@@ -49,6 +61,12 @@
         transition: 0.5s;
       }
     }
+
+    @media screen and (max-width: 337px) {
+      padding: 144px 10px 46px;
+      max-width: unset;
+      row-gap: 24px;
+    }
   }
 
   &__burger {
@@ -69,7 +87,7 @@
       }
 
       &:after {
-        transform: translateY(-12px) rotate(-135deg);
+        transform: translateY(-13px) rotate(-135deg);
       }
 
       .header__supplement {
@@ -89,17 +107,13 @@
     }
   }
 
-  &_state_hidden {
-    display: none;
-  }
-
-  .buttons {
+  .links {
     display: flex;
     column-gap: 30px;
     align-items: center;
 
-    &__account {
-      margin: auto 0 0 0;
+    @media screen and (max-width: 337px) {
+      column-gap: 14px;
     }
 
     &_type_movies {
@@ -109,6 +123,15 @@
       @media screen and (max-width: 785px) {
         display: none;
       }
+    }
+
+    &_position_navigation {
+      display: flex;
+      column-gap: 30px;
+      align-items: center;
+      flex-direction: column;
+      row-gap: 24px;
+      flex: 1;
     }
 
     &__login {
@@ -122,6 +145,11 @@
       font-size: 12px;
       line-height: 16px;
       text-decoration: none;
+
+      @media screen and (max-width: 337px) {
+        padding: 5px 12px;
+        font-size: 10px;
+      }
     }
 
     &__register {
@@ -132,6 +160,10 @@
       font-size: 12px;
       line-height: 16px;
       text-decoration: none;
+
+      @media screen and (max-width: 337px) {
+        font-size: 10px;
+      }
     }
 
     &__movies {

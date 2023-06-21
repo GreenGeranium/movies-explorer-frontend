@@ -14,4 +14,23 @@
     row-gap: 30px;
     grid-template-columns: repeat(auto-fit, 339px);
   }
+
+  @media screen and (max-width: 820px) {
+    grid-template-columns: repeat(auto-fit, 250px);
+    column-gap: 20px;
+    row-gap: 20px;
+  }
+
+  @media screen and (max-width: 620px) {
+    grid-template-columns: repeat(auto-fit, 240px);
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+
+  @media screen and (max-width: 530px) {
+    padding: 40px 10px 26px;
+    column-gap: 0;
+    row-gap: 14px;
+    grid-template-columns: 1fr;
+  }
 }

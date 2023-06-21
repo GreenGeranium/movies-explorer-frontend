@@ -8,6 +8,10 @@
     padding: 90px 50px;
   }
 
+  @media screen and (max-width: 337px) {
+    padding: 70px 18px;
+  }
+
   &__title {
     font-style: normal;
     font-weight: 400;
@@ -20,11 +24,20 @@
     flex-direction: column;
     grid-area: title;
 
+    @media screen and (max-width: 337px) {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
     &:after {
       border: 0.5px solid #dadada;
       content: "";
       margin-top: 23px;
       opacity: 0.7;
+
+      @media screen and (max-width: 337px) {
+        margin-top: 28px;
+      }
     }
   }
 
@@ -38,6 +51,12 @@
       margin-bottom: 93px;
     }
 
+    @media screen and (max-width: 337px) {
+      margin: 60px 0;
+      flex-direction: column;
+      row-gap: 56px;
+    }
+
     .steps {
       color: #ffffff;
 
@@ -48,6 +67,12 @@
         line-height: 24px;
         letter-spacing: -0.04em;
         margin: 0 0 26px;
+
+        @media screen and (max-width: 337px) {
+          font-size: 18px;
+          line-height: 22px;
+          margin-bottom: 16px;
+        }
       }
 
       &__text {
@@ -61,6 +86,11 @@
           font-size: 12px;
           line-height: 150%;
         }
+
+        @media screen and (max-width: 337px) {
+          font-size: 11px;
+          line-height: 16px;
+        }
       }
     }
   }
@@ -71,47 +101,72 @@
     margin: 0;
     row-gap: 14px;
 
-    .table__programming {
-      margin: 0;
-      color: #8b8b8b;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 121%;
-      text-align: center;
+    @media screen and (max-width: 337px) {
+      row-gap: 10px;
+    }
 
-      @media screen and (max-width: 785px) {
+    .table {
+      &__programming {
+        margin: 0;
+        color: #8b8b8b;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 121%;
+        text-align: center;
+
+        @media screen and (max-width: 785px) {
+          font-weight: 400;
+          line-height: 17px;
+          font-family: "Suisse Intl", "Inter", sans-serif;
+        }
+
+        @media screen and (max-width: 337px) {
+          font-size: 11px;
+          line-height: 13px;
+        }
+      }
+
+      &__text {
+        margin: 0;
+        background: #303030;
+        padding: 9px;
+        font-style: normal;
         font-weight: 400;
+        font-size: 14px;
         line-height: 17px;
-        font-family: "Suisse Intl", "Inter", sans-serif;
+        text-align: center;
+        color: #ffffff;
+
+        @media screen and (max-width: 337px) {
+          font-size: 11px;
+          line-height: 13px;
+          padding: 11px;
+        }
+
+        &_color_green {
+          background: #3ddc84;
+          color: #000000;
+        }
       }
-    }
 
-    .table__text {
-      margin: 0;
-      background: #303030;
-      padding: 9px;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 17px;
-      text-align: center;
-      color: #ffffff;
+      &__line {
+        display: grid;
+        grid-template-columns: 20% 80%;
 
-      &_color_green {
-        background: #3ddc84;
-        color: #000000;
+        @media screen and (max-width: 600px) {
+          grid-template-columns: 36% 64%;
+        }
       }
-    }
 
-    .table__line {
-      display: grid;
-      grid-template-columns: 20% 80%;
-    }
+      &__subtitles {
+        display: grid;
+        grid-template-columns: 20% 80%;
 
-    .table__subtitles {
-      display: grid;
-      grid-template-columns: 20% 80%;
+        @media screen and (max-width: 600px) {
+          grid-template-columns: 36% 64%;
+        }
+      }
     }
   }
 }

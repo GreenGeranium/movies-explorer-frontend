@@ -6,6 +6,10 @@
     padding: 90px 50px;
   }
 
+  @media screen and (max-width: 337px) {
+    padding: 70px 14px;
+  }
+
   &__title {
     font-style: normal;
     font-weight: 400;
@@ -13,6 +17,11 @@
     line-height: 111%;
     color: #8b8b8b;
     margin: 0;
+
+    @media screen and (max-width: 337px) {
+      font-size: 14px;
+      line-height: 20px;
+    }
   }
 
   &__links {
@@ -22,6 +31,10 @@
     display: flex;
     flex-direction: column;
     row-gap: 20px;
+
+    @media screen and (max-width: 337px) {
+      margin-top: 40px;
+    }
   }
 
   &__link {
@@ -41,6 +54,13 @@
     @media screen and (max-width: 785px) {
       font-size: 28px;
       line-height: 179%;
+    }
+
+    @media screen and (max-width: 337px) {
+      font-size: 18px;
+      line-height: 28px;
+      background-position: 99% 0%;
+      background-size: 9px 7px;
     }
 
     &:last-of-type {

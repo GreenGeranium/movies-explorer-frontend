@@ -34,6 +34,11 @@
     line-height: 16px;
     color: #ffffff;
     margin: 0;
+
+    @media screen and (max-width: 337px) {
+      font-size: 12px;
+      line-height: 15px;
+    }
   }
 
   &__trash {
@@ -75,7 +80,13 @@
     color: #8b8b8b;
 
     @media screen and (max-width: 785px) {
-      margin: 15px 0 0;
+      margin-top: 15px;
+    }
+
+    @media screen and (max-width: 337px) {
+      margin-top: 14px;
+      font-size: 10px;
+      line-height: 12px;
     }
   }
 }

@@ -5,8 +5,12 @@ import logo from "../../images/logomain.svg";
 
 function LogoIcon() {
   return (
-    <Link to="/" className="text-link">
-      <img src={logo} alt="Логотип Учебного проекта" />
+    <Link to="/" className="text-link logo-icon">
+      <img
+        src={logo}
+        alt="Логотип Учебного проекта"
+        className="logo-icon__icon"
+      />
     </Link>
   );
 }

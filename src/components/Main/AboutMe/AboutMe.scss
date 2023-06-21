@@ -8,6 +8,10 @@
     padding: 90px 50px 0;
   }
 
+  @media screen and (max-width: 337px) {
+    padding: 70px 14px 0;
+  }
+
   &__title {
     font-style: normal;
     font-weight: 400;
@@ -19,11 +23,20 @@
     display: flex;
     flex-direction: column;
 
+    @media screen and (max-width: 337px) {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
     &:after {
       border: 0.5px solid #dadada;
       content: "";
       margin-top: 23px;
       opacity: 0.7;
+
+      @media screen and (max-width: 337px) {
+        margin-top: 28px;
+      }
     }
   }
 
@@ -31,22 +44,34 @@
     margin: 66px 0 0 0;
     display: flex;
     justify-content: space-between;
+
+    @media screen and (max-width: 550px) {
+      margin-top: 60px;
+      flex-direction: column-reverse;
+      align-items: center;
+    }
   }
 
   &__description {
     display: flex;
     flex-direction: column;
+
+    @media screen and (max-width: 550px) {
+      margin-top: 40px;
+    }
   }
 
   &__avatar {
     border-radius: 10px;
     width: 270px;
-    height: 327px;
     object-fit: contain;
 
     @media screen and (max-width: 785px) {
       width: 255px;
-      height: 307px;
+    }
+
+    @media screen and (max-width: 337px) {
+      width: 100%;
     }
   }
 
@@ -64,6 +89,12 @@
       font-size: 40px;
       line-height: 100%;
     }
+
+    @media screen and (max-width: 337px) {
+      font-size: 30px;
+      line-height: 36px;
+      margin-bottom: 20px;
+    }
   }
 
   &__profession {
@@ -77,6 +108,12 @@
     @media screen and (max-width: 785px) {
       font-size: 12px;
       line-height: 150%;
+      margin-bottom: 20px;
+    }
+
+    @media screen and (max-width: 337px) {
+      font-size: 11px;
+      line-height: 16px;
       margin-bottom: 20px;
     }
   }
@@ -95,6 +132,13 @@
       line-height: 150%;
       max-width: 364px;
     }
+
+    @media screen and (max-width: 337px) {
+      max-width: unset;
+      font-size: 11px;
+      line-height: 16px;
+      margin-bottom: 40px;
+    }
   }
 
   &__github {
@@ -104,5 +148,6 @@
     line-height: 17px;
     color: #ffffff;
     margin-top: auto;
+    text-decoration: none;
   }
 }

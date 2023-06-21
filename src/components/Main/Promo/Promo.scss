@@ -13,6 +13,13 @@
     min-height: 784px;
   }
 
+  @media screen and (max-width: 337px) {
+    min-height: 570px;
+    background-size: 248px 248px;
+    justify-content: unset;
+    background-position: 38px 142px;
+  }
+
   &__title {
     margin: 0;
     font-style: normal;
@@ -24,5 +31,12 @@
     color: #ffffff;
     max-width: 730px;
     width: 100%;
+
+    @media screen and (max-width: 337px) {
+      max-width: 300px;
+      font-size: 31px;
+      line-height: 39px;
+      margin-top: 207px;
+    }
   }
 }

@@ -16,7 +16,14 @@ function AboutMe(props) {
             Контур». После того, как прошёл курс по веб-разработке, начал
             заниматься фриланс-заказами и ушёл с постоянной работы.
           </p>
-          <a className="aboutme__github">Github</a>
+          <a
+            className="aboutme__github"
+            target="_blank"
+            rel="noreferrer"
+            href={"//github.com/GreenGeranium"}
+          >
+            Github
+          </a>
         </div>
         <img
           src={avatar}

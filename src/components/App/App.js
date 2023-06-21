@@ -5,7 +5,7 @@ import Footer from "../Footer/Footer";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Movies from "../Movies/Movies";
 import Preloader from "../Preloader/Preloader";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import PageNotFound from "../PageNotFound/PageNotFound";

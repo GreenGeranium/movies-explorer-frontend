@@ -9,6 +9,14 @@
     margin-top: 232px;
   }
 
+  @media screen and (max-width: 500px) {
+    margin-top: 56px;
+    align-items: center;
+    max-width: unset;
+    padding: 0 30px 0;
+    width: unset;
+  }
+
   &__title {
     font-style: normal;
     font-weight: 500;
@@ -16,6 +24,10 @@
     line-height: 29px;
     margin: 40px 0;
     color: #ffffff;
+
+    @media screen and (max-width: 337px) {
+      margin-top: 50px;
+    }
   }
 
   &__form {
@@ -102,8 +114,19 @@
     padding: 13px 0 15px;
     width: 100%;
 
+    @media screen and (max-width: 337px) {
+      margin-top: 309px;
+      font-size: 12px;
+      line-height: 15px;
+      padding: 15px 0 15px;
+    }
+
     &_type_register {
       margin: 152px 0 0;
+
+      @media screen and (max-width: 337px) {
+        margin-top: 240px;
+      }
     }
   }
 
@@ -124,6 +147,12 @@
     line-height: 17px;
     margin: 16px 0 0;
     color: #8b8b8b;
+
+    @media screen and (max-width: 337px) {
+      font-size: 12px;
+      line-height: 15px;
+      margin-top: 14px;
+    }
   }
 
   &__link {

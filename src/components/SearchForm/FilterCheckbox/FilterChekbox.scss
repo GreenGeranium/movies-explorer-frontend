@@ -1,18 +1,11 @@
 .filtercheckbox {
   grid-area: short;
   justify-self: center;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 150%;
   display: flex;
   column-gap: 12px;
-  color: #FFFFFF;
   position: relative;
   width: 36px;
   height: 20px;
-
-
 
   &__slider {
     position: absolute;
@@ -22,8 +15,8 @@
     right: 0;
     bottom: 0;
     background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
     border-radius: 20px;
 
     &:before {
@@ -34,8 +27,8 @@
       left: 2px;
       bottom: 2px;
       background-color: white;
-      -webkit-transition: .4s;
-      transition: .4s;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
       border-radius: 50%;
     }
   }
@@ -46,11 +39,11 @@
     height: 20px;
 
     &:focus + .filtercheckbox__slider {
-      box-shadow: 0 0 1px #2196F3;
+      box-shadow: 0 0 1px #2196f3;
     }
 
     &:checked + .filtercheckbox__slider {
-      background-color: #3DDC84;;
+      background-color: #3ddc84;
     }
 
     &:checked + .filtercheckbox__slider:before {

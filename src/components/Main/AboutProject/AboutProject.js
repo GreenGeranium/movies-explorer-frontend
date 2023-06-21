@@ -20,7 +20,7 @@ function AboutProject(props) {
           </p>
         </div>
       </div>
-      <div className="aboutproject__table">
+      <div className="aboutproject__table table">
         <div className="table__line">
           <p className="table__text table__text_color_green">1 неделя</p>
           <p className="table__text">4 недели</p>

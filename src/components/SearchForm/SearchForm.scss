@@ -15,6 +15,11 @@
     row-gap: 40px;
   }
 
+  @media screen and (max-width: 337px) {
+    padding: 80px 14px 0;
+    row-gap: 46px;
+  }
+
   &__shortfilms {
     display: flex;
     column-gap: 12px;
@@ -25,6 +30,12 @@
     color: #ffffff;
     justify-self: center;
     grid-column: span 2;
+
+    @media screen and (max-width: 337px) {
+      row-gap: 13px;
+      font-size: 11px;
+      line-height: 18px;
+    }
   }
 
   &__input {
@@ -38,6 +49,10 @@
     font-size: 14px;
     line-height: 129%;
     color: white;
+
+    @media screen and (max-width: 337px) {
+      padding: 13px 0 13px 13px;
+    }
   }
 
   &__button {

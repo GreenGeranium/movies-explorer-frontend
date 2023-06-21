@@ -12,6 +12,11 @@
     row-gap: 96px;
   }
 
+  @media screen and (max-width: 500px) {
+    padding: 70px 30px 40px;
+    row-gap: 80px;
+  }
+
   &__title {
     margin: 0;
     font-style: normal;
@@ -28,6 +33,10 @@
     align-items: center;
     max-width: 410px;
     width: 100%;
+
+    @media screen and (max-width: 337px) {
+      max-width: unset;
+    }
   }
 
   &__input {
@@ -92,6 +101,12 @@
     @media screen and (max-width: 785px) {
       margin-top: 210px;
     }
+
+    @media screen and (max-width: 337px) {
+      margin-top: 379px;
+      font-size: 12px;
+      line-height: 15px;
+    }
   }
 
   &__exit {
@@ -105,5 +120,10 @@
     border: none;
     background: transparent;
     cursor: pointer;
+
+    @media screen and (max-width: 337px) {
+      font-size: 12px;
+      line-height: 15px;
+    }
   }
 }

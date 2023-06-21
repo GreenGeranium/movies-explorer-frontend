@@ -6,7 +6,7 @@ import Techs from "./Techs/Techs";
 import AboutMe from "./AboutMe/AboutMe";
 import Portfolio from "./Portfolio/Portfolio";
 import { useRef } from "react";
-function Main(props) {
+function Main() {
   const projectRef = useRef();
   const techsRef = useRef();
   const meRef = useRef();
