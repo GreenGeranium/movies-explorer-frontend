@@ -1,13 +1,13 @@
 import "./MoviesCardList.scss";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList() {
+function MoviesCardList(props) {
   return (
     <ul className="movieslist">
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
+      {props.films &&
+        props.films.map((film) => {
+          return <MoviesCard key={film.id} data={film}></MoviesCard>;
+        })}
     </ul>
   );
 }

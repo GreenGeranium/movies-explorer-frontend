@@ -2,11 +2,11 @@ import "./Movies.scss";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-function Movies() {
+function Movies(props) {
   return (
     <div className="movies">
-      <SearchForm></SearchForm>
-      <MoviesCardList></MoviesCardList>
+      <SearchForm onSearchFilms={props.onSearchFilms}></SearchForm>
+      <MoviesCardList films={props.filteredFilms}></MoviesCardList>
       <button className="movies__showmore">Ещё</button>
     </div>
   );

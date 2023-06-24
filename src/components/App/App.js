@@ -11,11 +11,36 @@ import Profile from "../Profile/Profile";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
+import moviesapi from "../../utils/MoviesApi";
 
 function App() {
   const { pathname } = useLocation();
   const [isLogged, setIsLogged] = useState(false);
   const pathsOfHeader = ["/", "/movies", "/saved-movies", "/profile"];
+  const [allFilms, setAllFilms] = useState([]);
+  const [filteredFilms, setFilteredFilms] = useState([]);
+
+  //поиск фильмов
+  function handleSearchFilms(data) {
+    moviesapi
+      .getFilms()
+      .then((data) => {
+        setAllFilms(data);
+        return data;
+      })
+      .then((films) => {
+        const filteredFilms = films.filter(
+          (film) =>
+            film.nameRU.toLowerCase().includes(data.toLowerCase()) ||
+            film.nameEN.toLowerCase().includes(data.toLowerCase())
+        );
+
+        setFilteredFilms(filteredFilms);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   useEffect(() => {
     window.onload = () => {
@@ -29,7 +54,16 @@ function App() {
       {pathsOfHeader.includes(pathname) ? <Header /> : ""}
       <Routes>
         <Route exact path="/" element={<Main />}></Route>
-        <Route exact path="/movies" element={<Movies />}></Route>
+        <Route
+          exact
+          path="/movies"
+          element={
+            <Movies
+              onSearchFilms={handleSearchFilms}
+              filteredFilms={filteredFilms}
+            />
+          }
+        ></Route>
         <Route exact path="/saved-movies" element={<SavedMovies />}></Route>
         <Route exact path="/profile" element={<Profile />}></Route>
         <Route exact path="/signin" element={<Login />}></Route>

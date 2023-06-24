@@ -39,7 +39,6 @@
   }
 
   &__input {
-    grid-area: input;
     background: #2f2f2f;
     border-radius: 8px;
     border: none;
@@ -49,9 +48,33 @@
     font-size: 14px;
     line-height: 129%;
     color: white;
+    width: 100%;
+    box-sizing: border-box;
 
     @media screen and (max-width: 337px) {
       padding: 13px 0 13px 13px;
+    }
+  }
+
+  &__label {
+    grid-area: input;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__error {
+    position: absolute;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #ee3465;
+    top: 56px;
+    margin: 0;
+
+    @media screen and (max-width: 785px) {
+      top: 50px;
     }
   }
 
