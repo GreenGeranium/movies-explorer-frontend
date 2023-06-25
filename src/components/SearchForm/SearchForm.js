@@ -1,16 +1,24 @@
 import "./SearchForm.scss";
 import FilterCheckbox from "./FilterCheckbox/FilterCheckbox";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import useFormValidation from "../../hooks/ValidationHook";
 
 function SearchForm(props) {
   const {
+    values,
+    handleChange,
+    errors,
+    isValid,
+    resetForm,
+    setValues,
+    setIsValid,
+  } = useFormValidation();
+
+  /*  const {
     register,
     formState: { errors },
     getValues,
-  } = useForm({ mode: "all" });
-
-  const [isError, setIsError] = useState(false);
+  } = useForm({ mode: "all" });*/
 
   return (
     <form
@@ -24,7 +32,7 @@ function SearchForm(props) {
           return;
         }
         const film = getValues("film");
-        props.onSearchFilms(film);
+        props.onSearchFilms(values);
       }}
     >
       <label className="searchform__label">

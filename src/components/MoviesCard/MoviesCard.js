@@ -17,11 +17,13 @@ function MoviesCard(props) {
 
   return (
     <article className="card">
-      <img
-        className="card__image"
-        alt='Постер фильма "33 слова о дизайне"'
-        src={`https://api.nomoreparties.co/${props.data.image.url}`}
-      />
+      <a className="card__link" href={props.data.trailerLink} target="_blank">
+        <img
+          className="card__image"
+          alt='Постер фильма "33 слова о дизайне"'
+          src={`https://api.nomoreparties.co/${props.data.image.url}`}
+        />
+      </a>
       <div className="card__description">
         <h4 className="card__name">{props.data.nameRU}</h4>
         {pathname === "/saved-movies" ? (

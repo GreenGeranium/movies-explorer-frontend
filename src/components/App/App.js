@@ -17,37 +17,43 @@ function App() {
   const { pathname } = useLocation();
   const [isLogged, setIsLogged] = useState(false);
   const pathsOfHeader = ["/", "/movies", "/saved-movies", "/profile"];
+  // TODO ДОБАВИТЬ ПОЛУЧЕНИЕ ИЗ LOCAL STORAGE
   const [allFilms, setAllFilms] = useState([]);
   const [filteredFilms, setFilteredFilms] = useState([]);
-
-  //поиск фильмов
-  function handleSearchFilms(data) {
-    moviesapi
-      .getFilms()
-      .then((data) => {
-        setAllFilms(data);
-        return data;
-      })
-      .then((films) => {
-        const filteredFilms = films.filter(
-          (film) =>
-            film.nameRU.toLowerCase().includes(data.toLowerCase()) ||
-            film.nameEN.toLowerCase().includes(data.toLowerCase())
-        );
-
-        setFilteredFilms(filteredFilms);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+  const [isPreloaderLoading, setIsPreloaderLoading] = useState(false);
 
   useEffect(() => {
-    window.onload = () => {
-      const preloader = document.querySelector(".preloader");
-      preloader.remove();
-    };
-  });
+    const items = JSON.parse(localStorage.getItem("allFilms"));
+    if (items) {
+      setAllFilms(items);
+    }
+  }, []);
+
+  //поиск фильмов
+  async function handleSearchFilms(filmToSearch) {
+    setIsPreloaderLoading(true);
+    localStorage.setItem("filmToSearch", filmToSearch);
+
+    try {
+      if (!localStorage.getItem("allFilms")) {
+        const films = await moviesapi.getFilms();
+        setAllFilms(films);
+        localStorage.setItem("allFilms", JSON.stringify(films));
+      }
+
+      const allFilms = JSON.parse(localStorage.getItem("allFilms"));
+      const filteredFilms = allFilms.filter(
+        (film) =>
+          film.nameRU.toLowerCase().includes(filmToSearch.toLowerCase()) ||
+          film.nameEN.toLowerCase().includes(filmToSearch.toLowerCase())
+      );
+
+      setFilteredFilms(filteredFilms);
+      setIsPreloaderLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="page">
@@ -61,6 +67,7 @@ function App() {
             <Movies
               onSearchFilms={handleSearchFilms}
               filteredFilms={filteredFilms}
+              isPreloaderLoading={isPreloaderLoading}
             />
           }
         ></Route>
@@ -71,7 +78,6 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer></Footer>
-      <Preloader></Preloader>
     </div>
   );
 }

@@ -10,6 +10,10 @@
     visibility: visible;
   }
 
+  &__link {
+    height: 100%;
+  }
+
   &__image {
     width: 100%;
     object-fit: cover;
