@@ -17,10 +17,10 @@ function App() {
   const { pathname } = useLocation();
   const [isLogged, setIsLogged] = useState(false);
   const pathsOfHeader = ["/", "/movies", "/saved-movies", "/profile"];
-  // TODO ДОБАВИТЬ ПОЛУЧЕНИЕ ИЗ LOCAL STORAGE
   const [allFilms, setAllFilms] = useState([]);
   const [filteredFilms, setFilteredFilms] = useState([]);
   const [isPreloaderLoading, setIsPreloaderLoading] = useState(false);
+  const [isShortFilmsChecked, setIsShortFilmsShecked] = useState(false);
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem("allFilms"));
@@ -29,10 +29,23 @@ function App() {
     }
   }, []);
 
+  // определить короткометражки или нет
+  function handleShortFilmsChecked() {
+    setIsShortFilmsShecked(!isShortFilmsChecked);
+    console.log(isShortFilmsChecked);
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem("shortChecked")) {
+      setIsShortFilmsShecked(JSON.parse(localStorage.getItem("shortChecked")));
+    }
+  }, []);
+
   //поиск фильмов
-  async function handleSearchFilms(filmToSearch) {
+  async function handleSearchFilms(data) {
     setIsPreloaderLoading(true);
-    localStorage.setItem("filmToSearch", filmToSearch);
+    localStorage.setItem("filmToSearch", data.filmName);
+    localStorage.setItem("shortChecked", isShortFilmsChecked);
 
     try {
       if (!localStorage.getItem("allFilms")) {
@@ -44,8 +57,8 @@ function App() {
       const allFilms = JSON.parse(localStorage.getItem("allFilms"));
       const filteredFilms = allFilms.filter(
         (film) =>
-          film.nameRU.toLowerCase().includes(filmToSearch.toLowerCase()) ||
-          film.nameEN.toLowerCase().includes(filmToSearch.toLowerCase())
+          film.nameRU.toLowerCase().includes(data.filmName.toLowerCase()) ||
+          film.nameEN.toLowerCase().includes(data.filmName.toLowerCase())
       );
 
       setFilteredFilms(filteredFilms);
@@ -65,6 +78,8 @@ function App() {
           path="/movies"
           element={
             <Movies
+              isShortFilmsChecked={isShortFilmsChecked}
+              handleShortFilms={handleShortFilmsChecked}
               onSearchFilms={handleSearchFilms}
               filteredFilms={filteredFilms}
               isPreloaderLoading={isPreloaderLoading}

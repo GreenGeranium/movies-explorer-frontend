@@ -6,7 +6,11 @@ import Preloader from "../Preloader/Preloader";
 function Movies(props) {
   return (
     <div className="movies">
-      <SearchForm onSearchFilms={props.onSearchFilms}></SearchForm>
+      <SearchForm
+        onSearchFilms={props.onSearchFilms}
+        isShortFilmsChecked={props.isShortFilmsChecked}
+        handleShortFilms={props.handleShortFilms}
+      ></SearchForm>
       <Preloader isPreloaderLoading={props.isPreloaderLoading}></Preloader>
       <MoviesCardList films={props.filteredFilms}></MoviesCardList>
       <button className="movies__showmore">Ещё</button>
