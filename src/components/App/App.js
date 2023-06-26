@@ -21,11 +21,16 @@ function App() {
   const [filteredFilms, setFilteredFilms] = useState([]);
   const [isPreloaderLoading, setIsPreloaderLoading] = useState(false);
   const [isShortFilmsChecked, setIsShortFilmsShecked] = useState(false);
+  const [isErrorOnLoadingFilms, setIsErrorOnLoadingFilms] = useState(false);
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem("allFilms"));
+    const foundItems = JSON.parse(localStorage.getItem("foundFilms"));
     if (items) {
       setAllFilms(items);
+    }
+    if (foundItems) {
+      setFilteredFilms(foundItems);
     }
   }, []);
 
@@ -62,9 +67,10 @@ function App() {
       );
 
       setFilteredFilms(filteredFilms);
+      localStorage.setItem("foundFilms", JSON.stringify(filteredFilms));
       setIsPreloaderLoading(false);
     } catch (error) {
-      console.error(error);
+      setIsErrorOnLoadingFilms(true);
     }
   }
 
@@ -83,6 +89,7 @@ function App() {
               onSearchFilms={handleSearchFilms}
               filteredFilms={filteredFilms}
               isPreloaderLoading={isPreloaderLoading}
+              isErrorOnLoadingFilms={isErrorOnLoadingFilms}
             />
           }
         ></Route>
