@@ -21,9 +21,10 @@ function AuthForm(props) {
       >
         {props.children}
         <button
+          disabled={!props.isFormValid}
           className={`authform__button ${
             pathname === "/signup" ? "authform__button_type_register" : ""
-          }`}
+          } ${props.isFormValid ? "authform__button_type_valid" : ""}`}
         >
           {pathname === "/signin" ? "Войти" : "Зарегистрироваться"}
         </button>

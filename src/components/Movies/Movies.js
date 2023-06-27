@@ -2,25 +2,16 @@ import "./Movies.scss";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import useResizeWindow from "../../hooks/ResizeHook";
 
 function Movies(props) {
-  const [cardsPerPage, setCardsPerPage] = useState(0);
-  const [cardsPerAdditionalLine, setCardsPerAdditionalLine] = useState(0);
-
-  // изменение количества карточек в зависимости от размеров окна
-  const handleResize = () => {
-    if (window.innerWidth >= 1280) {
-      setCardsPerPage(12);
-      setCardsPerAdditionalLine(3);
-    } else if (window.innerWidth >= 768) {
-      setCardsPerPage(8);
-      setCardsPerAdditionalLine(2);
-    } else {
-      setCardsPerPage(5);
-      setCardsPerAdditionalLine(2);
-    }
-  };
+  const {
+    cardsPerPage,
+    cardsPerAdditionalLine,
+    handleResize,
+    setCardsPerPage,
+  } = useResizeWindow();
 
   useEffect(() => {
     handleResize();
