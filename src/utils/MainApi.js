@@ -11,6 +11,7 @@ class MainApi {
     }
 
     return res.json().then((data) => {
+      console.log(data);
       return Promise.reject({
         statusCode: res.status,
         errorMessage:
@@ -56,12 +57,12 @@ class MainApi {
         duration: data.duration,
         year: data.year,
         description: data.description,
-        image: "https://api.nomoreparties.co/" + data.image.url,
+        image: "https://api.nomoreparties.co" + data.image.url,
         trailerLink: data.trailerLink,
         nameRU: data.nameRU,
         nameEN: data.nameEN,
         thumbnail:
-          "https://api.nomoreparties.co/" + data.image.formats.thumbnail.url,
+          "https://api.nomoreparties.co" + data.image.formats.thumbnail.url,
         movieId: data.id,
       }),
     }).then(this._getResponseData);

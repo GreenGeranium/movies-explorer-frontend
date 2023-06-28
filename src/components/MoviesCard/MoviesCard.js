@@ -5,7 +5,10 @@ import { useState } from "react";
 function MoviesCard(props) {
   const { pathname } = useLocation();
 
-  const isLiked = props.savedFilms.some((film) => film._id === props.data._id);
+  const isLiked = props.savedFilms.some(
+    (film) =>
+      film.movieId === props.data.id || film.movieId === props.data.movieId
+  );
 
   const cardLikeButtonClassName = `card__like ${
     isLiked && "card__like_active"
@@ -35,6 +38,7 @@ function MoviesCard(props) {
           type="button"
           aria-label="Лайк"
           onClick={() => {
+            console.log(isLiked);
             props.handleLikeMovie(props.data, isLiked);
           }}
         ></button>

@@ -24,7 +24,6 @@ function SearchForm(props) {
       name="search-form"
       id="search-form"
       onSubmit={(evt) => {
-        console.log(values);
         evt.preventDefault();
         if (!isValid) {
           return;

@@ -30,33 +30,11 @@ function App() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (localStorage.getItem("shortChecked")) {
-      setIsShortFilmsShecked(JSON.parse(localStorage.getItem("shortChecked")));
-    }
-    const items = JSON.parse(localStorage.getItem("allFilms"));
-    const foundItems = JSON.parse(localStorage.getItem("foundFilms"));
-    if (items) {
-      setAllFilms(items);
-    }
-    if (foundItems) {
-      setFilteredFilms(foundItems);
-    }
-  }, []);
-
   // при открытии страницы проверяется есть ли токен, если да, то получает информацию о пользователе,
-  // а также сохраненные карточки
+  // а также сохраненные карточки, прошлый последний запрос
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setIsLogged(true);
-      mainapi
-        .getUserInformation()
-        .then((data) => {
-          setCurrentUser(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
 
       mainapi
         .getSavedMovies()
@@ -66,6 +44,28 @@ function App() {
         .catch((error) => {
           console.log(error);
         });
+      mainapi
+        .getUserInformation()
+        .then((data) => {
+          setCurrentUser(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      if (localStorage.getItem("shortChecked")) {
+        setIsShortFilmsShecked(
+          JSON.parse(localStorage.getItem("shortChecked"))
+        );
+      }
+      const items = JSON.parse(localStorage.getItem("allFilms"));
+      const foundItems = JSON.parse(localStorage.getItem("foundFilms"));
+      if (items) {
+        setAllFilms(items);
+      }
+      if (foundItems) {
+        setFilteredFilms(foundItems);
+      }
     }
   }, [isLogged]);
 
@@ -90,18 +90,30 @@ function App() {
 
   // лайк карточке или удаление лайка
   function handleLikeMovie(data, isLiked) {
-    console.log(isLogged);
     if (isLiked) {
+      const savedFilm = savedFilms.find(
+        (film) => film.movieId === data.id || film.movieId === data.movieId
+      );
       mainapi
-        .removeLike(data._id)
-        .then((res) => {})
+        .removeLike(savedFilm._id)
+        .then((res) => {
+          console.log(res);
+          setSavedFilms((films) =>
+            films.filter((film) => {
+              return film._id !== res._id;
+            })
+          );
+        })
         .catch((error) => {
           console.log(error);
         });
     } else {
       mainapi
         .addLike(data)
-        .then((res) => {})
+        .then((res) => {
+          console.log(res);
+          setSavedFilms([...savedFilms, res]);
+        })
         .catch((error) => {
           console.log(error);
         });

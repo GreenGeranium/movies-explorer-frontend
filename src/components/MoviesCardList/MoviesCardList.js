@@ -10,7 +10,7 @@ function MoviesCardList(props) {
         props.films.map((film) => {
           return (
             <MoviesCard
-              key={pathname === "/saved-movies" ? film._id : film.movieId}
+              key={film.id ? film.id : film._id}
               data={film}
               savedFilms={props.savedFilms}
               handleLikeMovie={props.handleLikeMovie}
