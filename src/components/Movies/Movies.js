@@ -40,6 +40,8 @@ function Movies(props) {
       ) : (
         <>
           <MoviesCardList
+            handleLikeMovie={props.handleLikeMovie}
+            savedFilms={props.savedFilms}
             films={props.filteredFilms.slice(0, cardsPerPage)}
           ></MoviesCardList>
           {props.filteredFilms.length >= cardsPerPage && (

@@ -20,6 +20,9 @@ function AuthForm(props) {
         }}
       >
         {props.children}
+        <p className="authform__server-error">
+          {props.errorMessage.errorMessage}
+        </p>
         <button
           disabled={!props.isFormValid}
           className={`authform__button ${

@@ -4,7 +4,8 @@ import useFormValidation from "../../hooks/ValidationHook";
 import { useEffect } from "react";
 
 function SearchForm(props) {
-  const { values, handleChange, isValid, setValues } = useFormValidation();
+  const { values, handleChange, isValid, setValues, errors } =
+    useFormValidation();
 
   useEffect(() => {
     const storedFilmToSearch = localStorage.getItem("filmToSearch");
@@ -42,7 +43,7 @@ function SearchForm(props) {
           value={values.filmName || ""}
           required={true}
         />
-        {!values.filmName && (
+        {errors.filmName && (
           <span className="searchform__error">Нужно ввести ключевое слово</span>
         )}
       </label>

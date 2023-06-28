@@ -39,6 +39,10 @@
     line-height: 16px;
     color: #ffffff;
     margin: 0;
+    padding: 0 20px 0 0;
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
 
     @media screen and (max-width: 337px) {
       font-size: 12px;
@@ -48,14 +52,20 @@
 
   &__trash {
     position: absolute;
+    visibility: hidden;
     right: 14px;
     top: 14px;
     background-image: url("../../images/trash.svg");
     background-repeat: no-repeat;
     background-color: transparent;
     width: 6.84px;
-    height: 6.72px;
-    visibility: hidden;
+    height: 9.72px;
+    cursor: pointer;
+    border: none;
+
+    &:hover {
+      visibility: visible;
+    }
   }
 
   &__like {

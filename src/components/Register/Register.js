@@ -1,28 +1,25 @@
 import AuthForm from "../AuthForm/AuthForm";
 import useFormValidation from "../../hooks/ValidationHook";
 
-function Register() {
+function Register(props) {
   const { values, handleChange, isValid, errors } = useFormValidation();
-
-  function onSubmit() {
-    console.log(isValid);
-  }
 
   return (
     <AuthForm
       title="Добро пожаловать!"
-      handleSubmit={onSubmit}
+      handleSubmit={() => {
+        props.handleRegister(values);
+      }}
       isFormValid={isValid}
+      errorMessage={props.registrationError}
     >
       <label className="authform__label">
         <span className="authform__placeholder">Имя</span>
         <input
-          onChange={(evt) => {
-            handleChange(evt);
-            /*            console.log(errors);
-            console.log(values);*/
-          }}
+          onChange={handleChange}
           required={true}
+          minLength={2}
+          maxLength={30}
           type="text"
           className={`authform__input ${
             errors.name && "authform__input_type_error"
@@ -38,9 +35,6 @@ function Register() {
         <input
           required={true}
           onChange={handleChange}
-          /*pattern:
-              value: /\w+@\w+\.\w+/gi,*/
-
           type="email"
           className={`authform__input ${
             errors.email && "authform__input_type_error"
@@ -59,7 +53,6 @@ function Register() {
           required={true}
           onChange={handleChange}
           type="password"
-          minLength={8}
           className={`authform__input ${
             errors.password && "authform__input_type_error"
           }`}

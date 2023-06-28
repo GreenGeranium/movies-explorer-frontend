@@ -2,9 +2,8 @@ import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Movies from "../Movies/Movies";
-import Preloader from "../Preloader/Preloader";
 import { useEffect, useState } from "react";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
@@ -12,18 +11,29 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 import moviesapi from "../../utils/MoviesApi";
+import mainapi from "../../utils/MainApi";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {
   const { pathname } = useLocation();
+  const [currentUser, setCurrentUser] = useState({});
   const [isLogged, setIsLogged] = useState(false);
   const pathsOfHeader = ["/", "/movies", "/saved-movies", "/profile"];
   const [allFilms, setAllFilms] = useState([]);
+  const [savedFilms, setSavedFilms] = useState([]);
   const [filteredFilms, setFilteredFilms] = useState([]);
   const [isPreloaderLoading, setIsPreloaderLoading] = useState(false);
   const [isShortFilmsChecked, setIsShortFilmsShecked] = useState(false);
   const [isErrorOnLoadingFilms, setIsErrorOnLoadingFilms] = useState(false);
+  const [registrationError, setRegistrationError] = useState("");
+  const [authentificationError, setAuthenticationError] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (localStorage.getItem("shortChecked")) {
+      setIsShortFilmsShecked(JSON.parse(localStorage.getItem("shortChecked")));
+    }
     const items = JSON.parse(localStorage.getItem("allFilms"));
     const foundItems = JSON.parse(localStorage.getItem("foundFilms"));
     if (items) {
@@ -34,19 +44,91 @@ function App() {
     }
   }, []);
 
+  // при открытии страницы проверяется есть ли токен, если да, то получает информацию о пользователе,
+  // а также сохраненные карточки
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsLogged(true);
+      mainapi
+        .getUserInformation()
+        .then((data) => {
+          setCurrentUser(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      mainapi
+        .getSavedMovies()
+        .then((data) => {
+          setSavedFilms(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [isLogged]);
+
   // определить короткометражки или нет
   function handleShortFilmsChecked() {
     setIsShortFilmsShecked(!isShortFilmsChecked);
     console.log(isShortFilmsChecked);
   }
 
-  useEffect(() => {
-    if (localStorage.getItem("shortChecked")) {
-      setIsShortFilmsShecked(JSON.parse(localStorage.getItem("shortChecked")));
-    }
-  }, []);
+  // регистрация аккаунта
+  function handleRegister(data) {
+    mainapi
+      .handleRegister(data)
+      .then((res) => {
+        handleLogin(data);
+        setRegistrationError("");
+      })
+      .catch((error) => {
+        setRegistrationError(error);
+      });
+  }
 
-  //поиск фильмов
+  // лайк карточке или удаление лайка
+  function handleLikeMovie(data, isLiked) {
+    console.log(isLogged);
+    if (isLiked) {
+      mainapi
+        .removeLike(data._id)
+        .then((res) => {})
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      mainapi
+        .addLike(data)
+        .then((res) => {})
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+
+  //авторизация аккаунта
+  function handleLogin(data) {
+    mainapi
+      .handleLogin(data)
+      .then((res) => {
+        localStorage.setItem("token", res.token);
+        setIsLogged(true);
+        navigate("/movies");
+      })
+      .catch((error) => {
+        setAuthenticationError(error);
+      });
+  }
+
+  function handleSignOut() {
+    localStorage.clear();
+    navigate("/");
+    setIsLogged(false);
+  }
+
+  // поиск фильмов
   async function handleSearchFilms(data) {
     setIsPreloaderLoading(true);
     localStorage.setItem("filmToSearch", data.filmName);
@@ -76,30 +158,66 @@ function App() {
 
   return (
     <div className="page">
-      {pathsOfHeader.includes(pathname) ? <Header /> : ""}
-      <Routes>
-        <Route exact path="/" element={<Main />}></Route>
-        <Route
-          exact
-          path="/movies"
-          element={
-            <Movies
-              isShortFilmsChecked={isShortFilmsChecked}
-              handleShortFilms={handleShortFilmsChecked}
-              onSearchFilms={handleSearchFilms}
-              filteredFilms={filteredFilms}
-              isPreloaderLoading={isPreloaderLoading}
-              isErrorOnLoadingFilms={isErrorOnLoadingFilms}
-            />
-          }
-        ></Route>
-        <Route exact path="/saved-movies" element={<SavedMovies />}></Route>
-        <Route exact path="/profile" element={<Profile />}></Route>
-        <Route exact path="/signin" element={<Login />}></Route>
-        <Route exact path="/signup" element={<Register />}></Route>
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-      <Footer></Footer>
+      <CurrentUserContext.Provider value={currentUser}>
+        {pathsOfHeader.includes(pathname) ? <Header isLogged={isLogged} /> : ""}
+        <Routes>
+          <Route exact path="/" element={<Main />}></Route>
+          <Route
+            exact
+            path="/movies"
+            element={
+              <Movies
+                isShortFilmsChecked={isShortFilmsChecked}
+                handleShortFilms={handleShortFilmsChecked}
+                onSearchFilms={handleSearchFilms}
+                filteredFilms={filteredFilms}
+                savedFilms={savedFilms}
+                isPreloaderLoading={isPreloaderLoading}
+                isErrorOnLoadingFilms={isErrorOnLoadingFilms}
+                handleLikeMovie={handleLikeMovie}
+              />
+            }
+          ></Route>
+          <Route
+            exact
+            path="/saved-movies"
+            element={
+              <SavedMovies
+                films={savedFilms}
+                savedFilms={savedFilms}
+                handleLikeMovie={handleLikeMovie}
+              />
+            }
+          ></Route>
+          <Route
+            exact
+            path="/profile"
+            element={<Profile onSignOut={handleSignOut} />}
+          ></Route>
+          <Route
+            exact
+            path="/signin"
+            element={
+              <Login
+                handleLogin={handleLogin}
+                authentificationError={authentificationError}
+              />
+            }
+          ></Route>
+          <Route
+            exact
+            path="/signup"
+            element={
+              <Register
+                handleRegister={handleRegister}
+                registrationError={registrationError}
+              />
+            }
+          ></Route>
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+        <Footer></Footer>
+      </CurrentUserContext.Provider>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 .header {
   display: flex;
   justify-content: space-between;
-  background: #073042;
+  background: #202020;
   padding: 21px 70px;
   align-items: center;
 
@@ -9,9 +9,8 @@
     display: none;
   }
 
-  &_type_movies {
-    background: #202020;
-    justify-content: space-between;
+  &_type_main {
+    background: #073042;
   }
 
   @media screen and (max-width: 785px) {

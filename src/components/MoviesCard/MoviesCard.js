@@ -1,19 +1,15 @@
 import "./MoviesCard.scss";
 import { useLocation } from "react-router-dom";
-import picture from "../../images/filmpic.png";
 import { useState } from "react";
 
 function MoviesCard(props) {
   const { pathname } = useLocation();
-  const [isLiked, setIsLiked] = useState(false);
+
+  const isLiked = props.savedFilms.some((film) => film._id === props.data._id);
 
   const cardLikeButtonClassName = `card__like ${
     isLiked && "card__like_active"
   }`;
-
-  function handleLike() {
-    setIsLiked(!isLiked);
-  }
 
   return (
     <article className="card">
@@ -21,21 +17,27 @@ function MoviesCard(props) {
         <img
           className="card__image"
           alt='Постер фильма "33 слова о дизайне"'
-          src={`https://api.nomoreparties.co/${props.data.image.url}`}
+          src={
+            pathname === "/saved-movies"
+              ? props.data.image
+              : `https://api.nomoreparties.co/${props.data.image.url}`
+          }
         />
       </a>
       <div className="card__description">
         <h4 className="card__name">{props.data.nameRU}</h4>
-        {pathname === "/saved-movies" ? (
-          <div className="card__trash"></div>
-        ) : (
-          <button
-            className={cardLikeButtonClassName}
-            type="button"
-            aria-label="Лайк"
-            onClick={handleLike}
-          ></button>
-        )}
+        <button
+          className={`${
+            pathname === "/saved-movies"
+              ? "card__trash"
+              : cardLikeButtonClassName
+          }`}
+          type="button"
+          aria-label="Лайк"
+          onClick={() => {
+            props.handleLikeMovie(props.data, isLiked);
+          }}
+        ></button>
         <p className="card__length">{`${
           Math.floor(props.data.duration / 60) >= 1
             ? Math.floor(props.data.duration / 60) + "ч"
