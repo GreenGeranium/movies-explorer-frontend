@@ -5,12 +5,25 @@ import "./SavedMovies.scss";
 function SavedMovies(props) {
   return (
     <div className="savedmovies">
-      <SearchForm></SearchForm>
-      <MoviesCardList
-        films={props.films}
-        handleLikeMovie={props.handleLikeMovie}
-        savedFilms={props.savedFilms}
-      ></MoviesCardList>
+      <SearchForm
+        onSearchFilms={props.onSearchFilms}
+        isShortSavedFilmsChecked={props.isShortSavedFilmsChecked}
+        isSavedMovies={true}
+        handleShortFilms={props.handleShortFilms}
+      ></SearchForm>
+      {props.filteredSavedFilms.length > 0 ? (
+        <MoviesCardList
+          films={props.filteredSavedFilms}
+          handleLikeMovie={props.handleLikeMovie}
+          savedFilms={props.savedFilms}
+        ></MoviesCardList>
+      ) : (
+        <MoviesCardList
+          films={props.savedFilms}
+          handleLikeMovie={props.handleLikeMovie}
+          savedFilms={props.savedFilms}
+        ></MoviesCardList>
+      )}
     </div>
   );
 }

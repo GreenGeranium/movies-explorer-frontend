@@ -8,12 +8,14 @@ function SearchForm(props) {
     useFormValidation();
 
   useEffect(() => {
-    const storedFilmToSearch = localStorage.getItem("filmToSearch");
-    if (storedFilmToSearch) {
-      setValues({
-        ...values,
-        filmName: storedFilmToSearch,
-      });
+    if (!props.isSavedMovies) {
+      const storedFilmToSearch = localStorage.getItem("filmToSearch");
+      if (storedFilmToSearch) {
+        setValues({
+          ...values,
+          filmName: storedFilmToSearch,
+        });
+      }
     }
   }, []);
 
@@ -51,6 +53,8 @@ function SearchForm(props) {
         <FilterCheckbox
           handleChange={props.handleShortFilms}
           isShortFilmsChecked={props.isShortFilmsChecked}
+          isSavedMovies={props.isSavedMovies}
+          isShortSavedFilmsChecked={props.isShortSavedFilmsChecked}
         ></FilterCheckbox>
         <span>Короткометражки</span>
       </label>

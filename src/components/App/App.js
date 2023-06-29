@@ -22,8 +22,11 @@ function App() {
   const [allFilms, setAllFilms] = useState([]);
   const [savedFilms, setSavedFilms] = useState([]);
   const [filteredFilms, setFilteredFilms] = useState([]);
+  const [filteredSavedFilms, setFilteredSavedFilms] = useState([]);
   const [isPreloaderLoading, setIsPreloaderLoading] = useState(false);
   const [isShortFilmsChecked, setIsShortFilmsShecked] = useState(false);
+  const [isShortSavedFilmsChecked, setIsShortSavedFilmsChecked] =
+    useState(false);
   const [isErrorOnLoadingFilms, setIsErrorOnLoadingFilms] = useState(false);
   const [registrationError, setRegistrationError] = useState("");
   const [authentificationError, setAuthenticationError] = useState("");
@@ -70,10 +73,11 @@ function App() {
     }
   }, [isLogged]);
 
-  // определить короткометражки или нет
-  function handleShortFilmsChecked() {
-    setIsShortFilmsShecked(!isShortFilmsChecked);
-    console.log(isShortFilmsChecked);
+  // определить короткометражки или нет в зависимости какая страница открыта, сохраненки или нет
+  function handleShortFilmsChecked(isSavedMovies) {
+    isSavedMovies
+      ? setIsShortSavedFilmsChecked(!isShortSavedFilmsChecked)
+      : setIsShortFilmsShecked(!isShortFilmsChecked);
   }
 
   // редактирование пользователя
@@ -111,7 +115,6 @@ function App() {
       mainapi
         .removeLike(savedFilm._id)
         .then((res) => {
-          console.log(res);
           setSavedFilms((films) =>
             films.filter((film) => {
               return film._id !== res._id;
@@ -125,7 +128,6 @@ function App() {
       mainapi
         .addLike(data)
         .then((res) => {
-          console.log(res);
           setSavedFilms([...savedFilms, res]);
         })
         .catch((error) => {
@@ -182,6 +184,15 @@ function App() {
     }
   }
 
+  function handleSearchSavedFilms(data) {
+    const filteredFilms = savedFilms.filter(
+      (film) =>
+        film.nameRU.toLowerCase().includes(data.filmName.toLowerCase()) ||
+        film.nameEN.toLowerCase().includes(data.filmName.toLowerCase())
+    );
+    setFilteredSavedFilms(filteredFilms);
+  }
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -209,9 +220,12 @@ function App() {
             path="/saved-movies"
             element={
               <SavedMovies
-                films={savedFilms}
                 savedFilms={savedFilms}
+                onSearchFilms={handleSearchSavedFilms}
                 handleLikeMovie={handleLikeMovie}
+                isShortSavedFilmsChecked={isShortSavedFilmsChecked}
+                handleShortFilms={handleShortFilmsChecked}
+                filteredSavedFilms={filteredSavedFilms}
               />
             }
           ></Route>

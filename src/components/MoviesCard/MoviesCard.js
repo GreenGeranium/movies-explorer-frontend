@@ -38,7 +38,6 @@ function MoviesCard(props) {
           type="button"
           aria-label="Лайк"
           onClick={() => {
-            console.log(isLiked);
             props.handleLikeMovie(props.data, isLiked);
           }}
         ></button>
