@@ -27,6 +27,7 @@ function App() {
   const [isErrorOnLoadingFilms, setIsErrorOnLoadingFilms] = useState(false);
   const [registrationError, setRegistrationError] = useState("");
   const [authentificationError, setAuthenticationError] = useState("");
+  const [editProfileMessage, setEditProfileMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -73,6 +74,19 @@ function App() {
   function handleShortFilmsChecked() {
     setIsShortFilmsShecked(!isShortFilmsChecked);
     console.log(isShortFilmsChecked);
+  }
+
+  // редактирование пользователя
+  function handleEditAccountInformation(data) {
+    mainapi
+      .editProfile(data)
+      .then((res) => {
+        setCurrentUser(res);
+        setEditProfileMessage("Профиль успешно изменен");
+      })
+      .catch((error) => {
+        setEditProfileMessage(error);
+      });
   }
 
   // регистрация аккаунта
@@ -204,7 +218,13 @@ function App() {
           <Route
             exact
             path="/profile"
-            element={<Profile onSignOut={handleSignOut} />}
+            element={
+              <Profile
+                onEditProfile={handleEditAccountInformation}
+                onSignOut={handleSignOut}
+                message={editProfileMessage}
+              />
+            }
           ></Route>
           <Route
             exact

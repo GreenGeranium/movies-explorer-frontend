@@ -38,6 +38,15 @@ class MainApi {
     }).then(this._getResponseData);
   }
 
+  //изменить информацию о профиле
+  editProfile({ name, email }) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({ name, email }),
+    }).then(this._getResponseData);
+  }
+
   //удалить лайк
   removeLike(_id) {
     return fetch(`${this._baseUrl}/movies/${_id}`, {
