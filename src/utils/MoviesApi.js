@@ -1,3 +1,5 @@
+import { MOVIES_API } from "./constants";
+
 class MoviesApi {
   //обработка запроса
   _getResponseData(res) {
@@ -9,7 +11,7 @@ class MoviesApi {
 
   //получение всех фильмов
   getFilms() {
-    return fetch("https://api.nomoreparties.co/beatfilm-movies", {
+    return fetch(MOVIES_API, {
       headers: { "Content-Type": "application/json" },
       method: "GET",
     }).then(this._getResponseData);

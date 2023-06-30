@@ -14,6 +14,7 @@ import moviesapi from "../../utils/MoviesApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import MainApi from "../../utils/MainApi";
+import { MAIN_API } from "../../utils/constants";
 
 function App() {
   const { pathname } = useLocation();
@@ -35,7 +36,7 @@ function App() {
   const navigate = useNavigate();
 
   const mainapi = new MainApi({
-    baseUrl: "http://api.geranius.nomoredomains.rocks",
+    baseUrl: MAIN_API,
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
@@ -66,7 +67,7 @@ function App() {
   function handleRegister(data) {
     mainapi
       .handleRegister(data)
-      .then((res) => {
+      .then(() => {
         handleLogin(data);
         setRegistrationError("");
       })
@@ -145,7 +146,7 @@ function App() {
         (film) =>
           (film.nameRU.toLowerCase().includes(data.filmName.toLowerCase()) ||
             film.nameEN.toLowerCase().includes(data.filmName.toLowerCase())) &
-          (isShortFilmsChecked ? film.duration < 40 : true)
+          (isShortFilmsChecked ? film.duration <= 40 : true)
       );
 
       setFilteredFilms(filteredFilms);
@@ -161,7 +162,7 @@ function App() {
       (film) =>
         (film.nameRU.toLowerCase().includes(data.filmName.toLowerCase()) ||
           film.nameEN.toLowerCase().includes(data.filmName.toLowerCase())) &&
-        (isShortSavedFilmsChecked ? film.duration < 40 : true)
+        (isShortSavedFilmsChecked ? film.duration <= 40 : true)
     );
     setFilteredSavedFilms(filteredFilms);
   }

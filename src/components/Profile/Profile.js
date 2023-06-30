@@ -4,7 +4,6 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import useFormValidation from "../../hooks/ValidationHook";
 
 function Profile(props) {
-  // TODO ДОБАВИТЬ ОШИБКИ
   const currentUser = useContext(CurrentUserContext);
 
   const { values, handleChange, errors, isValid, setValues, setIsValid } =

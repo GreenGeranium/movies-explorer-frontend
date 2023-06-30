@@ -1,5 +1,4 @@
 import AuthForm from "../AuthForm/AuthForm";
-import { useForm } from "react-hook-form";
 import useFormValidation from "../../hooks/ValidationHook";
 
 function Login(props) {
