@@ -24,6 +24,7 @@
   &__overlay {
     content: "";
     position: fixed;
+    display: none;
     top: 0;
     left: 0;
     right: 0;
@@ -31,6 +32,10 @@
     z-index: 15;
     background-color: rgba(0, 0, 0, 0.3);
     transition: 0.5s;
+
+    @media screen and (max-width: 785px) {
+      display: block;
+    }
 
     @media screen and (max-width: 337px) {
       content: none;

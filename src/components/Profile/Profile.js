@@ -7,15 +7,16 @@ function Profile(props) {
   // TODO ДОБАВИТЬ ОШИБКИ
   const currentUser = useContext(CurrentUserContext);
 
-  const { values, handleChange, errors, isValid, setValues } =
+  const { values, handleChange, errors, isValid, setValues, setIsValid } =
     useFormValidation();
 
   //отрисовка значений формы, полученных из контекста с сервера
   useEffect(() => {
+    setIsValid(false);
     setValues({
       ...values,
-      ["name"]: currentUser.name || "",
       ["email"]: currentUser.email || "",
+      ["name"]: currentUser.name || "",
     });
   }, [currentUser, setValues]);
 

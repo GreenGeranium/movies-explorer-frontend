@@ -86,6 +86,14 @@ class MainApi {
     }).then(this._getResponseData);
   }
 
+  // проверка токена
+  checkToken() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "GET",
+      headers: this._headers,
+    }).then(this._getResponseData);
+  }
+
   // авторизация пользователя
   handleLogin({ email, password }) {
     return fetch(`${this._baseUrl}/signin`, {
@@ -96,12 +104,4 @@ class MainApi {
   }
 }
 
-const mainapi = new MainApi({
-  baseUrl: "http://api.geranius.nomoredomains.rocks",
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-    "Content-Type": "application/json",
-  },
-});
-
-export default mainapi;
+export default MainApi;

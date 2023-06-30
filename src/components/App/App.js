@@ -11,16 +11,15 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 import moviesapi from "../../utils/MoviesApi";
-import mainapi from "../../utils/MainApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import MainApi from "../../utils/MainApi";
 
 function App() {
   const { pathname } = useLocation();
   const [currentUser, setCurrentUser] = useState({});
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(!!localStorage.getItem("token"));
   const pathsOfHeader = ["/", "/movies", "/saved-movies", "/profile"];
-  const [allFilms, setAllFilms] = useState([]);
   const [savedFilms, setSavedFilms] = useState([]);
   const [filteredFilms, setFilteredFilms] = useState([]);
   const [filteredSavedFilms, setFilteredSavedFilms] = useState([]);
@@ -35,44 +34,13 @@ function App() {
 
   const navigate = useNavigate();
 
-  // при открытии страницы проверяется есть ли токен, если да, то получает информацию о пользователе,
-  // а также сохраненные карточки, прошлый последний запрос
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setIsLogged(true);
-
-      mainapi
-        .getSavedMovies()
-        .then((data) => {
-          setSavedFilms(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      mainapi
-        .getUserInformation()
-        .then((data) => {
-          setCurrentUser(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      if (localStorage.getItem("shortChecked")) {
-        setIsShortFilmsShecked(
-          JSON.parse(localStorage.getItem("shortChecked"))
-        );
-      }
-      const items = JSON.parse(localStorage.getItem("allFilms"));
-      const foundItems = JSON.parse(localStorage.getItem("foundFilms"));
-      if (items) {
-        setAllFilms(items);
-      }
-      if (foundItems) {
-        setFilteredFilms(foundItems);
-      }
-    }
-  }, [isLogged]);
+  const mainapi = new MainApi({
+    baseUrl: "http://api.geranius.nomoredomains.rocks",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  });
 
   // определить короткометражки или нет в зависимости какая страница открыта, сохраненки или нет
   function handleShortFilmsChecked(isSavedMovies) {
@@ -142,9 +110,11 @@ function App() {
     mainapi
       .handleLogin(data)
       .then((res) => {
-        localStorage.setItem("token", res.token);
-        setIsLogged(true);
-        navigate("/movies");
+        if (res.token) {
+          localStorage.setItem("token", res.token);
+          setIsLogged(true);
+          navigate("/movies");
+        }
       })
       .catch((error) => {
         setAuthenticationError(error);
@@ -153,8 +123,9 @@ function App() {
 
   function handleSignOut() {
     localStorage.clear();
-    navigate("/");
     setIsLogged(false);
+    setCurrentUser(null);
+    navigate("/");
   }
 
   // поиск фильмов
@@ -166,15 +137,15 @@ function App() {
     try {
       if (!localStorage.getItem("allFilms")) {
         const films = await moviesapi.getFilms();
-        setAllFilms(films);
         localStorage.setItem("allFilms", JSON.stringify(films));
       }
 
       const allFilms = JSON.parse(localStorage.getItem("allFilms"));
       const filteredFilms = allFilms.filter(
         (film) =>
-          film.nameRU.toLowerCase().includes(data.filmName.toLowerCase()) ||
-          film.nameEN.toLowerCase().includes(data.filmName.toLowerCase())
+          (film.nameRU.toLowerCase().includes(data.filmName.toLowerCase()) ||
+            film.nameEN.toLowerCase().includes(data.filmName.toLowerCase())) &
+          (isShortFilmsChecked ? film.duration < 40 : true)
       );
 
       setFilteredFilms(filteredFilms);
@@ -188,11 +159,59 @@ function App() {
   function handleSearchSavedFilms(data) {
     const filteredFilms = savedFilms.filter(
       (film) =>
-        film.nameRU.toLowerCase().includes(data.filmName.toLowerCase()) ||
-        film.nameEN.toLowerCase().includes(data.filmName.toLowerCase())
+        (film.nameRU.toLowerCase().includes(data.filmName.toLowerCase()) ||
+          film.nameEN.toLowerCase().includes(data.filmName.toLowerCase())) &&
+        (isShortSavedFilmsChecked ? film.duration < 40 : true)
     );
     setFilteredSavedFilms(filteredFilms);
   }
+
+  // при открытии страницы проверяется есть ли токен, если да, то получает информацию о пользователе,
+  // а также сохраненные карточки, прошлый последний запрос
+  useEffect(() => {
+    if (localStorage.getItem("shortChecked")) {
+      setIsShortFilmsShecked(JSON.parse(localStorage.getItem("shortChecked")));
+    }
+    const foundItems = JSON.parse(localStorage.getItem("foundFilms"));
+    if (foundItems) {
+      setFilteredFilms(foundItems);
+    }
+
+    const jwt = localStorage.getItem("token");
+    if (jwt) {
+      mainapi
+        .checkToken()
+        .then(() => {
+          setIsLogged(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
+  // установка пользователя при авторизации и сохранненых карточек
+  useEffect(() => {
+    if (isLogged) {
+      mainapi
+        .getUserInformation()
+        .then((data) => {
+          setCurrentUser(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      mainapi
+        .getSavedMovies()
+        .then((data) => {
+          setSavedFilms(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [isLogged]);
 
   return (
     <div className="page">
