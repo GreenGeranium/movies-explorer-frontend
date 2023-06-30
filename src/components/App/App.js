@@ -13,6 +13,7 @@ import Register from "../Register/Register";
 import moviesapi from "../../utils/MoviesApi";
 import mainapi from "../../utils/MainApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const { pathname } = useLocation();
@@ -203,7 +204,8 @@ function App() {
             exact
             path="/movies"
             element={
-              <Movies
+              <ProtectedRoute
+                element={Movies}
                 isShortFilmsChecked={isShortFilmsChecked}
                 handleShortFilms={handleShortFilmsChecked}
                 onSearchFilms={handleSearchFilms}
@@ -212,6 +214,7 @@ function App() {
                 isPreloaderLoading={isPreloaderLoading}
                 isErrorOnLoadingFilms={isErrorOnLoadingFilms}
                 handleLikeMovie={handleLikeMovie}
+                isLogged={isLogged}
               />
             }
           ></Route>
@@ -219,7 +222,9 @@ function App() {
             exact
             path="/saved-movies"
             element={
-              <SavedMovies
+              <ProtectedRoute
+                isLogged={isLogged}
+                element={SavedMovies}
                 savedFilms={savedFilms}
                 onSearchFilms={handleSearchSavedFilms}
                 handleLikeMovie={handleLikeMovie}
@@ -233,7 +238,9 @@ function App() {
             exact
             path="/profile"
             element={
-              <Profile
+              <ProtectedRoute
+                element={Profile}
+                isLogged={isLogged}
                 onEditProfile={handleEditAccountInformation}
                 onSignOut={handleSignOut}
                 message={editProfileMessage}
