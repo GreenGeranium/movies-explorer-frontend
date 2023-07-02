@@ -15,6 +15,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import MainApi from "../../utils/MainApi";
 import { MAIN_API } from "../../utils/constants";
+import Preloader from "../Preloader/Preloader";
 
 function App() {
   const { pathname } = useLocation();
@@ -43,52 +44,6 @@ function App() {
       "Content-Type": "application/json",
     },
   });
-
-  // определить короткометражки или нет, в зависимости какая страница открыта, сохраненки или нет
-  function handleShortFilmsChecked(isSavedMovies) {
-    isSavedMovies
-      ? setIsShortSavedFilmsChecked(!isShortSavedFilmsChecked)
-      : setIsShortFilmsChecked(!isShortFilmsChecked);
-  }
-
-  // при каждом изменении чекбокса, происходит поиск
-  useEffect(() => {
-    handleSearchFilms({ filmName: localStorage.getItem("filmToSearch") });
-    handleSearchSavedFilms({ filmName: localStorage.getItem("filmToSearch") });
-  }, [isShortFilmsChecked, isShortSavedFilmsChecked]);
-
-  // редактирование пользователя
-  function handleEditAccountInformation(data) {
-    setIsFormSubmitting(true);
-    mainapi
-      .editProfile(data)
-      .then((res) => {
-        setCurrentUser(res);
-        setEditProfileMessage("Профиль успешно изменен");
-      })
-      .catch((error) => {
-        setEditProfileMessage(error);
-      })
-      .finally(() => {
-        setIsFormSubmitting(false);
-      });
-  }
-
-  // регистрация аккаунта
-  function handleRegister(data) {
-    setIsFormSubmitting(true);
-    mainapi
-      .handleRegister(data)
-      .then(() => {
-        handleLogin(data);
-        setRegistrationError("");
-      })
-      .catch((error) => {
-        setRegistrationError(error);
-        setIsFormSubmitting(false);
-      });
-  }
-
   // лайк карточке или удаление лайка
   function handleLikeMovie(data, isLiked) {
     if (isLiked) {
@@ -124,6 +79,21 @@ function App() {
     }
   }
 
+  // регистрация аккаунта
+  function handleRegister(data) {
+    setIsFormSubmitting(true);
+    mainapi
+      .handleRegister(data)
+      .then(() => {
+        handleLogin(data);
+        setRegistrationError("");
+      })
+      .catch((error) => {
+        setRegistrationError(error);
+        setIsFormSubmitting(false);
+      });
+  }
+
   //авторизация аккаунта
   function handleLogin(data) {
     setIsFormSubmitting(true);
@@ -143,6 +113,24 @@ function App() {
       });
   }
 
+  // редактирование пользователя
+  function handleEditAccountInformation(data) {
+    setIsFormSubmitting(true);
+    mainapi
+      .editProfile(data)
+      .then((res) => {
+        setCurrentUser(res);
+        setEditProfileMessage("Профиль успешно изменен");
+      })
+      .catch((error) => {
+        setEditProfileMessage(error);
+      })
+      .finally(() => {
+        setIsFormSubmitting(false);
+      });
+  }
+
+  // выход из аккаунта
   function handleSignOut() {
     localStorage.clear();
     setIsLogged(false);
@@ -150,11 +138,24 @@ function App() {
     navigate("/");
   }
 
+  // определить короткометражки или нет, в зависимости какая страница открыта, сохраненки или нет
+  function handleShortFilmsChecked(isSavedMovies) {
+    isSavedMovies
+      ? setIsShortSavedFilmsChecked(!isShortSavedFilmsChecked)
+      : setIsShortFilmsChecked(!isShortFilmsChecked);
+  }
+
+  // при каждом изменении чекбокса, происходит поиск
+  useEffect(() => {
+    handleSearchFilms({ filmName: localStorage.getItem("filmToSearch") });
+    handleSearchSavedFilms({ filmName: localStorage.getItem("filmToSearch") });
+  }, [isShortFilmsChecked, isShortSavedFilmsChecked]);
+
   // поиск фильмов
-  async function handleSearchFilms(data) {
+  async function handleSearchFilms() {
     setIsPreloaderLoading(true);
-    localStorage.setItem("filmToSearch", data.filmName);
     localStorage.setItem("shortChecked", isShortFilmsChecked);
+    const filmName = localStorage.getItem("filmToSearch");
 
     try {
       if (!localStorage.getItem("allFilms")) {
@@ -165,8 +166,8 @@ function App() {
       const allFilms = JSON.parse(localStorage.getItem("allFilms"));
       const filteredFilms = allFilms.filter(
         (film) =>
-          (film.nameRU.toLowerCase().includes(data.filmName.toLowerCase()) ||
-            film.nameEN.toLowerCase().includes(data.filmName.toLowerCase())) &
+          (film.nameRU.toLowerCase().includes(filmName.toLowerCase()) ||
+            film.nameEN.toLowerCase().includes(filmName.toLowerCase())) &&
           (isShortFilmsChecked ? film.duration <= 40 : true)
       );
 
@@ -193,11 +194,11 @@ function App() {
   useEffect(() => {
     const jwt = localStorage.getItem("token");
     if (jwt) {
+      setIsPreloaderLoading(true);
       mainapi
         .checkToken()
         .then((res) => {
           if (res) {
-            setIsPreloaderLoading(true);
             setIsLogged(true);
             if (localStorage.getItem("shortChecked")) {
               setIsShortFilmsChecked(
@@ -213,6 +214,9 @@ function App() {
         .catch((error) => {
           console.log(error);
           navigate("/signin");
+        })
+        .finally(() => {
+          setIsPreloaderLoading(true);
         });
     }
   }, []);
@@ -242,86 +246,94 @@ function App() {
 
   return (
     <div className="page">
-      <CurrentUserContext.Provider value={currentUser}>
-        {pathsOfHeader.includes(pathname) ? <Header isLogged={isLogged} /> : ""}
-        <Routes>
-          <Route exact path="/" element={<Main />}></Route>
-          <Route
-            exact
-            path="/movies"
-            element={
-              <ProtectedRoute
-                element={Movies}
-                isShortFilmsChecked={isShortFilmsChecked}
-                handleShortFilms={handleShortFilmsChecked}
-                onSearchFilms={handleSearchFilms}
-                filteredFilms={filteredFilms}
-                savedFilms={savedFilms}
-                isPreloaderLoading={isPreloaderLoading}
-                isErrorOnLoadingFilms={isErrorOnLoadingFilms}
-                handleLikeMovie={handleLikeMovie}
-                isLogged={isLogged}
-              />
-            }
-          ></Route>
-          <Route
-            exact
-            path="/saved-movies"
-            element={
-              <ProtectedRoute
-                isLogged={isLogged}
-                element={SavedMovies}
-                savedFilms={savedFilms}
-                onSearchFilms={handleSearchSavedFilms}
-                handleLikeMovie={handleLikeMovie}
-                isShortSavedFilmsChecked={isShortSavedFilmsChecked}
-                handleShortFilms={handleShortFilmsChecked}
-                filteredSavedFilms={filteredSavedFilms}
-              />
-            }
-          ></Route>
-          <Route
-            exact
-            path="/profile"
-            element={
-              <ProtectedRoute
-                element={Profile}
-                isLogged={isLogged}
-                onEditProfile={handleEditAccountInformation}
-                onSignOut={handleSignOut}
-                message={editProfileMessage}
-                isFormSubmitting={isFormSubmitting}
-              />
-            }
-          ></Route>
-          <Route
-            exact
-            path="/signin"
-            element={
-              <Login
-                handleLogin={handleLogin}
-                authentificationError={authentificationError}
-                isLogged={isLogged}
-                isFormSubmitting={isFormSubmitting}
-              />
-            }
-          ></Route>
-          <Route
-            exact
-            path="/signup"
-            element={
-              <Register
-                handleRegister={handleRegister}
-                registrationError={registrationError}
-                isLogged={isLogged}
-                isFormSubmitting={isFormSubmitting}
-              />
-            }
-          ></Route>
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-        <Footer></Footer>
-      </CurrentUserContext.Provider>
+      {isPreloaderLoading ? (
+        <Preloader isPreloaderLoading={isPreloaderLoading} position="main" />
+      ) : (
+        <CurrentUserContext.Provider value={currentUser}>
+          {pathsOfHeader.includes(pathname) ? (
+            <Header isLogged={isLogged} />
+          ) : (
+            ""
+          )}
+          <Routes>
+            <Route exact path="/" element={<Main />}></Route>
+            <Route
+              exact
+              path="/movies"
+              element={
+                <ProtectedRoute
+                  element={Movies}
+                  isShortFilmsChecked={isShortFilmsChecked}
+                  handleShortFilms={handleShortFilmsChecked}
+                  onSearchFilms={handleSearchFilms}
+                  filteredFilms={filteredFilms}
+                  savedFilms={savedFilms}
+                  isPreloaderLoading={isPreloaderLoading}
+                  isErrorOnLoadingFilms={isErrorOnLoadingFilms}
+                  handleLikeMovie={handleLikeMovie}
+                  isLogged={isLogged}
+                />
+              }
+            ></Route>
+            <Route
+              exact
+              path="/saved-movies"
+              element={
+                <ProtectedRoute
+                  isLogged={isLogged}
+                  element={SavedMovies}
+                  savedFilms={savedFilms}
+                  onSearchFilms={handleSearchSavedFilms}
+                  handleLikeMovie={handleLikeMovie}
+                  isShortSavedFilmsChecked={isShortSavedFilmsChecked}
+                  handleShortFilms={handleShortFilmsChecked}
+                  filteredSavedFilms={filteredSavedFilms}
+                />
+              }
+            ></Route>
+            <Route
+              exact
+              path="/profile"
+              element={
+                <ProtectedRoute
+                  element={Profile}
+                  isLogged={isLogged}
+                  onEditProfile={handleEditAccountInformation}
+                  onSignOut={handleSignOut}
+                  message={editProfileMessage}
+                  isFormSubmitting={isFormSubmitting}
+                />
+              }
+            ></Route>
+            <Route
+              exact
+              path="/signin"
+              element={
+                <Login
+                  handleLogin={handleLogin}
+                  authentificationError={authentificationError}
+                  isLogged={isLogged}
+                  isFormSubmitting={isFormSubmitting}
+                />
+              }
+            ></Route>
+            <Route
+              exact
+              path="/signup"
+              element={
+                <Register
+                  handleRegister={handleRegister}
+                  registrationError={registrationError}
+                  isLogged={isLogged}
+                  isFormSubmitting={isFormSubmitting}
+                />
+              }
+            ></Route>
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+          <Footer></Footer>
+        </CurrentUserContext.Provider>
+      )}
     </div>
   );
 }

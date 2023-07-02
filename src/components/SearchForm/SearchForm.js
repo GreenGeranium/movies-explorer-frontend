@@ -30,6 +30,7 @@ function SearchForm(props) {
         if (!values.filmName) {
           return;
         }
+        localStorage.setItem("filmToSearch", values.filmName);
         props.onSearchFilms(values);
       }}
     >

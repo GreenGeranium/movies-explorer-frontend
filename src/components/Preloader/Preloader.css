@@ -49,6 +49,10 @@
   padding: 175px 0;
 }
 
+.preloader_position_main {
+  height: 100vh;
+}
+
 .preloader_active {
   display: flex;
 }
