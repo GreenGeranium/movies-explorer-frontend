@@ -11,7 +11,6 @@ function Profile(props) {
 
   //отрисовка значений формы, полученных из контекста с сервера
   useEffect(() => {
-    setIsValid(false);
     setValues({
       ...values,
       ["email"]: currentUser.email || "",
@@ -29,11 +28,8 @@ function Profile(props) {
         id="profile-form"
         onSubmit={(evt) => {
           evt.preventDefault();
-          if (
-            isValid &&
-            (currentUser.name !== values.name ||
-              currentUser.email !== values.email)
-          ) {
+          console.log(true);
+          if (isValid) {
             props.onEditProfile(values);
           }
         }}
@@ -48,6 +44,7 @@ function Profile(props) {
             name="name"
             onChange={handleChange}
             value={values.name || ""}
+            disabled={props.isFormSubmitting}
           />
           {errors.name && <span className="profile__error">{errors.name}</span>}
         </label>
@@ -61,6 +58,7 @@ function Profile(props) {
             required={true}
             onChange={handleChange}
             value={values.email || ""}
+            disabled={props.isFormSubmitting}
           />
           {errors.email && (
             <span className="profile__error">{errors.email}</span>
@@ -72,9 +70,20 @@ function Profile(props) {
             : props.message}
         </p>
         <button
-          className={`profile__edit ${isValid && "profile__edit_active"}`}
+          className={`profile__edit ${
+            !isValid ||
+            ((currentUser.name !== values.name ||
+              currentUser.email !== values.email) &&
+              !props.isFormSubmitting &&
+              "profile__edit_active")
+          }`}
           type="submit"
-          disabled={!isValid}
+          disabled={
+            !isValid ||
+            props.isFormSubmitting ||
+            (currentUser.name === values.name &&
+              currentUser.email === values.email)
+          }
         >
           Редактировать
         </button>

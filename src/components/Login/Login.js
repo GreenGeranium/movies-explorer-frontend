@@ -1,8 +1,22 @@
 import AuthForm from "../AuthForm/AuthForm";
 import useFormValidation from "../../hooks/ValidationHook";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login(props) {
-  const { values, handleChange, isValid, errors } = useFormValidation();
+  const { values, handleChange, isValid, errors, setIsValid } =
+    useFormValidation();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsValid(false);
+  }, []);
+
+  //в случае если профиль
+  useEffect(() => {
+    props.isLogged && navigate("/movies");
+  }, [props.isLogged]);
 
   return (
     <AuthForm
@@ -13,6 +27,7 @@ function Login(props) {
         props.handleLogin(values);
       }}
       errorMessage={props.authentificationError}
+      isFormSubmitting={props.isFormSubmitting}
     >
       <label className="authform__label">
         <span className="authform__placeholder">E-mail</span>
@@ -27,6 +42,7 @@ function Login(props) {
           name="email"
           placeholder="Введите email"
           value={values.email || ""}
+          disabled={props.isFormSubmitting}
         />
         {errors.email && (
           <span className="authform__error">{errors.email}</span>
@@ -45,6 +61,7 @@ function Login(props) {
           id="password"
           placeholder="Введите пароль"
           value={values.password || ""}
+          disabled={props.isFormSubmitting}
         />
         {errors.password && (
           <span className="authform__error">{errors.password}</span>

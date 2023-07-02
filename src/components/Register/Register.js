@@ -1,8 +1,22 @@
 import AuthForm from "../AuthForm/AuthForm";
 import useFormValidation from "../../hooks/ValidationHook";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Register(props) {
-  const { values, handleChange, isValid, errors } = useFormValidation();
+  const { values, handleChange, isValid, errors, setIsValid } =
+    useFormValidation();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsValid(false);
+  }, []);
+
+  //в случае если профиль
+  useEffect(() => {
+    props.isLogged && navigate("/movies");
+  }, [props.isLogged]);
 
   return (
     <AuthForm
@@ -12,6 +26,7 @@ function Register(props) {
       }}
       isFormValid={isValid}
       errorMessage={props.registrationError}
+      isFormSubmitting={props.isFormSubmitting}
     >
       <label className="authform__label">
         <span className="authform__placeholder">Имя</span>

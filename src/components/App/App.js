@@ -19,19 +19,20 @@ import { MAIN_API } from "../../utils/constants";
 function App() {
   const { pathname } = useLocation();
   const [currentUser, setCurrentUser] = useState({});
-  const [isLogged, setIsLogged] = useState(!!localStorage.getItem("token"));
+  const [isLogged, setIsLogged] = useState(false);
   const pathsOfHeader = ["/", "/movies", "/saved-movies", "/profile"];
   const [savedFilms, setSavedFilms] = useState([]);
   const [filteredFilms, setFilteredFilms] = useState([]);
   const [filteredSavedFilms, setFilteredSavedFilms] = useState([]);
   const [isPreloaderLoading, setIsPreloaderLoading] = useState(false);
-  const [isShortFilmsChecked, setIsShortFilmsShecked] = useState(false);
+  const [isShortFilmsChecked, setIsShortFilmsChecked] = useState(false);
   const [isShortSavedFilmsChecked, setIsShortSavedFilmsChecked] =
     useState(false);
   const [isErrorOnLoadingFilms, setIsErrorOnLoadingFilms] = useState(false);
   const [registrationError, setRegistrationError] = useState("");
   const [authentificationError, setAuthenticationError] = useState("");
   const [editProfileMessage, setEditProfileMessage] = useState("");
+  const [isFormSubmitting, setIsFormSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
@@ -43,15 +44,22 @@ function App() {
     },
   });
 
-  // определить короткометражки или нет в зависимости какая страница открыта, сохраненки или нет
+  // определить короткометражки или нет, в зависимости какая страница открыта, сохраненки или нет
   function handleShortFilmsChecked(isSavedMovies) {
     isSavedMovies
       ? setIsShortSavedFilmsChecked(!isShortSavedFilmsChecked)
-      : setIsShortFilmsShecked(!isShortFilmsChecked);
+      : setIsShortFilmsChecked(!isShortFilmsChecked);
   }
+
+  // при каждом изменении чекбокса, происходит поиск
+  useEffect(() => {
+    handleSearchFilms({ filmName: localStorage.getItem("filmToSearch") });
+    handleSearchSavedFilms({ filmName: localStorage.getItem("filmToSearch") });
+  }, [isShortFilmsChecked, isShortSavedFilmsChecked]);
 
   // редактирование пользователя
   function handleEditAccountInformation(data) {
+    setIsFormSubmitting(true);
     mainapi
       .editProfile(data)
       .then((res) => {
@@ -60,11 +68,15 @@ function App() {
       })
       .catch((error) => {
         setEditProfileMessage(error);
+      })
+      .finally(() => {
+        setIsFormSubmitting(false);
       });
   }
 
   // регистрация аккаунта
   function handleRegister(data) {
+    setIsFormSubmitting(true);
     mainapi
       .handleRegister(data)
       .then(() => {
@@ -73,6 +85,7 @@ function App() {
       })
       .catch((error) => {
         setRegistrationError(error);
+        setIsFormSubmitting(false);
       });
   }
 
@@ -87,6 +100,11 @@ function App() {
         .then((res) => {
           setSavedFilms((films) =>
             films.filter((film) => {
+              return film._id !== res._id;
+            })
+          );
+          setFilteredSavedFilms((savedFilms) =>
+            savedFilms.filter((film) => {
               return film._id !== res._id;
             })
           );
@@ -108,6 +126,7 @@ function App() {
 
   //авторизация аккаунта
   function handleLogin(data) {
+    setIsFormSubmitting(true);
     mainapi
       .handleLogin(data)
       .then((res) => {
@@ -115,9 +134,11 @@ function App() {
           localStorage.setItem("token", res.token);
           setIsLogged(true);
           navigate("/movies");
+          setIsFormSubmitting(false);
         }
       })
       .catch((error) => {
+        setIsFormSubmitting(false);
         setAuthenticationError(error);
       });
   }
@@ -170,23 +191,28 @@ function App() {
   // при открытии страницы проверяется есть ли токен, если да, то получает информацию о пользователе,
   // а также сохраненные карточки, прошлый последний запрос
   useEffect(() => {
-    if (localStorage.getItem("shortChecked")) {
-      setIsShortFilmsShecked(JSON.parse(localStorage.getItem("shortChecked")));
-    }
-    const foundItems = JSON.parse(localStorage.getItem("foundFilms"));
-    if (foundItems) {
-      setFilteredFilms(foundItems);
-    }
-
     const jwt = localStorage.getItem("token");
     if (jwt) {
       mainapi
         .checkToken()
-        .then(() => {
-          setIsLogged(true);
+        .then((res) => {
+          if (res) {
+            setIsPreloaderLoading(true);
+            setIsLogged(true);
+            if (localStorage.getItem("shortChecked")) {
+              setIsShortFilmsChecked(
+                JSON.parse(localStorage.getItem("shortChecked"))
+              );
+            }
+            const foundItems = JSON.parse(localStorage.getItem("foundFilms"));
+            if (foundItems) {
+              setFilteredFilms(foundItems);
+            }
+          }
         })
         .catch((error) => {
           console.log(error);
+          navigate("/signin");
         });
     }
   }, []);
@@ -264,6 +290,7 @@ function App() {
                 onEditProfile={handleEditAccountInformation}
                 onSignOut={handleSignOut}
                 message={editProfileMessage}
+                isFormSubmitting={isFormSubmitting}
               />
             }
           ></Route>
@@ -274,6 +301,8 @@ function App() {
               <Login
                 handleLogin={handleLogin}
                 authentificationError={authentificationError}
+                isLogged={isLogged}
+                isFormSubmitting={isFormSubmitting}
               />
             }
           ></Route>
@@ -284,6 +313,8 @@ function App() {
               <Register
                 handleRegister={handleRegister}
                 registrationError={registrationError}
+                isLogged={isLogged}
+                isFormSubmitting={isFormSubmitting}
               />
             }
           ></Route>

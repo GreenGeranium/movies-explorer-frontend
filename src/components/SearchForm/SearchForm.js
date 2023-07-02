@@ -27,7 +27,7 @@ function SearchForm(props) {
       id="search-form"
       onSubmit={(evt) => {
         evt.preventDefault();
-        if (!isValid) {
+        if (!values.filmName) {
           return;
         }
         props.onSearchFilms(values);
@@ -42,9 +42,8 @@ function SearchForm(props) {
           id="filmName"
           onChange={handleChange}
           value={values.filmName || ""}
-          required={true}
         />
-        {errors.filmName && (
+        {!values.filmName && (
           <span className="searchform__error">Нужно ввести ключевое слово</span>
         )}
       </label>
