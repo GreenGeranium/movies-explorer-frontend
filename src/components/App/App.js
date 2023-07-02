@@ -35,6 +35,7 @@ function App() {
   const [editProfileMessage, setEditProfileMessage] = useState("");
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
 
+  const location = useLocation();
   const navigate = useNavigate();
 
   const mainapi = new MainApi({
@@ -193,13 +194,16 @@ function App() {
   // а также сохраненные карточки, прошлый последний запрос
   useEffect(() => {
     const jwt = localStorage.getItem("token");
+    console.log(location.pathname);
     if (jwt) {
       setIsPreloaderLoading(true);
       mainapi
         .checkToken()
         .then((res) => {
+          console.log(isPreloaderLoading);
           if (res) {
             setIsLogged(true);
+            navigate(location.pathname);
             if (localStorage.getItem("shortChecked")) {
               setIsShortFilmsChecked(
                 JSON.parse(localStorage.getItem("shortChecked"))
@@ -216,8 +220,11 @@ function App() {
           navigate("/signin");
         })
         .finally(() => {
-          setIsPreloaderLoading(true);
+          setIsPreloaderLoading(false);
         });
+    } else {
+      navigate("/signin");
+      setIsPreloaderLoading(false);
     }
   }, []);
 
