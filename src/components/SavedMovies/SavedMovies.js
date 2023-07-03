@@ -8,7 +8,6 @@ function SavedMovies(props) {
       <SearchForm
         onSearchFilms={props.onSearchFilms}
         isShortSavedFilmsChecked={props.isShortSavedFilmsChecked}
-        isSavedMovies={true}
         handleShortFilms={props.handleShortFilms}
       ></SearchForm>
       {props.filteredSavedFilms.length > 0 ? (

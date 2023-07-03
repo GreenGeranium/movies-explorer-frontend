@@ -26,6 +26,7 @@ function App() {
   const [filteredFilms, setFilteredFilms] = useState([]);
   const [filteredSavedFilms, setFilteredSavedFilms] = useState([]);
   const [isPreloaderLoading, setIsPreloaderLoading] = useState(false);
+  const [isPageLoading, setIsPageLoading] = useState(false);
   const [isShortFilmsChecked, setIsShortFilmsChecked] = useState(false);
   const [isShortSavedFilmsChecked, setIsShortSavedFilmsChecked] =
     useState(false);
@@ -140,22 +141,44 @@ function App() {
   }
 
   // определить короткометражки или нет, в зависимости какая страница открыта, сохраненки или нет
-  function handleShortFilmsChecked(isSavedMovies) {
-    isSavedMovies
-      ? setIsShortSavedFilmsChecked(!isShortSavedFilmsChecked)
-      : setIsShortFilmsChecked(!isShortFilmsChecked);
+  function handleShortFilmsChecked() {
+    setIsPreloaderLoading(true);
+    if (location.pathname === "/saved-movies") {
+      console.log("saved");
+      setIsShortSavedFilmsChecked(!isShortSavedFilmsChecked);
+      if (isShortSavedFilmsChecked) {
+        setFilteredSavedFilms((prevFilteredFilms) =>
+          prevFilteredFilms.filter((film) => film.duration <= 40)
+        );
+        setIsPreloaderLoading(false);
+      } else {
+        setFilteredSavedFilms((prevFilteredFilms) =>
+          prevFilteredFilms.filter((film) => film.duration > 40)
+        );
+        setIsPreloaderLoading(false);
+      }
+    } else {
+      console.log("notsaved");
+      console.log(filteredFilms);
+      setIsShortFilmsChecked(!isShortFilmsChecked);
+      localStorage.setItem("shortChecked", isShortFilmsChecked);
+      if (isShortFilmsChecked) {
+        setFilteredFilms((prevFilteredFilms) =>
+          prevFilteredFilms.filter((film) => film.duration <= 40)
+        );
+        setIsPreloaderLoading(false);
+      } else {
+        setFilteredFilms((prevFilteredFilms) =>
+          prevFilteredFilms.filter((film) => film.duration > 40)
+        );
+        setIsPreloaderLoading(false);
+      }
+    }
   }
-
-  // при каждом изменении чекбокса, происходит поиск
-  useEffect(() => {
-    handleSearchFilms({ filmName: localStorage.getItem("filmToSearch") });
-    handleSearchSavedFilms({ filmName: localStorage.getItem("filmToSearch") });
-  }, [isShortFilmsChecked, isShortSavedFilmsChecked]);
 
   // поиск фильмов
   async function handleSearchFilms() {
     setIsPreloaderLoading(true);
-    localStorage.setItem("shortChecked", isShortFilmsChecked);
     const filmName = localStorage.getItem("filmToSearch");
 
     try {
@@ -167,9 +190,8 @@ function App() {
       const allFilms = JSON.parse(localStorage.getItem("allFilms"));
       const filteredFilms = allFilms.filter(
         (film) =>
-          (film.nameRU.toLowerCase().includes(filmName.toLowerCase()) ||
-            film.nameEN.toLowerCase().includes(filmName.toLowerCase())) &&
-          (isShortFilmsChecked ? film.duration <= 40 : true)
+          film.nameRU.toLowerCase().includes(filmName.toLowerCase()) ||
+          film.nameEN.toLowerCase().includes(filmName.toLowerCase())
       );
 
       setFilteredFilms(filteredFilms);
@@ -183,9 +205,8 @@ function App() {
   function handleSearchSavedFilms(data) {
     const filteredFilms = savedFilms.filter(
       (film) =>
-        (film.nameRU.toLowerCase().includes(data.filmName.toLowerCase()) ||
-          film.nameEN.toLowerCase().includes(data.filmName.toLowerCase())) &&
-        (isShortSavedFilmsChecked ? film.duration <= 40 : true)
+        film.nameRU.toLowerCase().includes(data.filmName.toLowerCase()) ||
+        film.nameEN.toLowerCase().includes(data.filmName.toLowerCase())
     );
     setFilteredSavedFilms(filteredFilms);
   }
@@ -194,13 +215,11 @@ function App() {
   // а также сохраненные карточки, прошлый последний запрос
   useEffect(() => {
     const jwt = localStorage.getItem("token");
-    console.log(location.pathname);
     if (jwt) {
-      setIsPreloaderLoading(true);
+      setIsPageLoading(true);
       mainapi
         .checkToken()
         .then((res) => {
-          console.log(isPreloaderLoading);
           if (res) {
             setIsLogged(true);
             navigate(location.pathname);
@@ -220,11 +239,11 @@ function App() {
           navigate("/signin");
         })
         .finally(() => {
-          setIsPreloaderLoading(false);
+          setIsPageLoading(false);
         });
     } else {
       navigate("/signin");
-      setIsPreloaderLoading(false);
+      setIsPageLoading(false);
     }
   }, []);
 
@@ -253,8 +272,8 @@ function App() {
 
   return (
     <div className="page">
-      {isPreloaderLoading ? (
-        <Preloader isPreloaderLoading={isPreloaderLoading} position="main" />
+      {isPageLoading ? (
+        <Preloader isPreloaderLoading={isPageLoading} position="main" />
       ) : (
         <CurrentUserContext.Provider value={currentUser}>
           {pathsOfHeader.includes(pathname) ? (

@@ -2,13 +2,16 @@ import "./SearchForm.scss";
 import FilterCheckbox from "./FilterCheckbox/FilterCheckbox";
 import useFormValidation from "../../hooks/ValidationHook";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function SearchForm(props) {
   const { values, handleChange, isValid, setValues, errors } =
     useFormValidation();
 
+  const location = useLocation();
+
   useEffect(() => {
-    if (!props.isSavedMovies) {
+    if (location.pathname === "/movies") {
       const storedFilmToSearch = localStorage.getItem("filmToSearch");
       if (storedFilmToSearch) {
         setValues({
@@ -53,7 +56,6 @@ function SearchForm(props) {
         <FilterCheckbox
           handleChange={props.handleShortFilms}
           isShortFilmsChecked={props.isShortFilmsChecked}
-          isSavedMovies={props.isSavedMovies}
           isShortSavedFilmsChecked={props.isShortSavedFilmsChecked}
         ></FilterCheckbox>
         <span>Короткометражки</span>

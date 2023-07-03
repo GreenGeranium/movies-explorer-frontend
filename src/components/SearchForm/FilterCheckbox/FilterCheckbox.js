@@ -1,6 +1,10 @@
 import "./FilterChekbox.scss";
+import { useLocation } from "react-router-dom";
 
 function FilterCheckbox(props) {
+  const location = useLocation();
+  const isSavedPage = location.pathname === "/saved-movies";
+
   return (
     <label className="filtercheckbox">
       <input
@@ -9,10 +13,10 @@ function FilterCheckbox(props) {
         name="shortChecked"
         id="shortChecked"
         onChange={() => {
-          props.handleChange(props.isSavedMovies);
+          props.handleChange();
         }}
         checked={
-          props.isSavedMovies
+          isSavedPage
             ? props.isShortSavedFilmsChecked
             : props.isShortFilmsChecked
         }
