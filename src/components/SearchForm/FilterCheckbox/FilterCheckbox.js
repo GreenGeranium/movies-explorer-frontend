@@ -25,7 +25,7 @@ function FilterCheckbox(props) {
           props.handleChange(event);
           setIsChecked(event.target.checked);
         }}
-        checked={isChecked}
+        checked={isChecked === true}
       />
       <span className="filtercheckbox__slider"></span>
     </label>

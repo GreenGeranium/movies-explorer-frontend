@@ -30,7 +30,6 @@ const useSavedMovies = (fetchSavedMovies) => {
     if (!searchInput && !isShortChecked) {
       return savedMovies;
     }
-    console.log(savedMovies);
 
     savedMovies.forEach((movie) => {
       const isFilmShort = movie.duration <= 40;
@@ -70,10 +69,41 @@ const useSavedMovies = (fetchSavedMovies) => {
     setIsShortChecked(event.target.checked);
   }, []);
 
+  // лайк карточке или удаление лайка
+  function handleLikeMovie(data, isLiked) {
+    if (isLiked) {
+      const savedMovie = savedMovies.find(
+        (film) => film.movieId === data.id || film.movieId === data.movieId
+      );
+      fetchSavedMovies
+        .removeLike(savedMovie._id)
+        .then((res) => {
+          setSavedMovies((films) =>
+            films.filter((film) => {
+              return film._id !== res._id;
+            })
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      fetchSavedMovies
+        .addLike(data)
+        .then((res) => {
+          setSavedMovies([...savedMovies, res]);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+
   return {
     handleSetShortSavedMovies,
     handleSetSearchSavedField,
     savedMovies: filteredMovies,
+    handleLikeMovie,
   };
 };
 

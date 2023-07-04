@@ -50,43 +50,12 @@ function App() {
     },
   });
 
-  const { savedMovies, handleSetShortSavedMovies, handleSetSearchSavedField } =
-    useSavedMovies(mainapi);
-
-  // лайк карточке или удаление лайка
-  function handleLikeMovie(data, isLiked) {
-    if (isLiked) {
-      const savedFilm = savedFilms.find(
-        (film) => film.movieId === data.id || film.movieId === data.movieId
-      );
-      mainapi
-        .removeLike(savedFilm._id)
-        .then((res) => {
-          setSavedFilms((films) =>
-            films.filter((film) => {
-              return film._id !== res._id;
-            })
-          );
-          setFilteredSavedFilms((savedFilms) =>
-            savedFilms.filter((film) => {
-              return film._id !== res._id;
-            })
-          );
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      mainapi
-        .addLike(data)
-        .then((res) => {
-          setSavedFilms([...savedFilms, res]);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }
+  const {
+    savedMovies,
+    handleSetShortSavedMovies,
+    handleSetSearchSavedField,
+    handleLikeMovie,
+  } = useSavedMovies(mainapi);
 
   // регистрация аккаунта
   function handleRegister(data) {
