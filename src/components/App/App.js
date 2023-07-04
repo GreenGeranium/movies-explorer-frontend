@@ -16,6 +16,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import MainApi from "../../utils/MainApi";
 import { MAIN_API } from "../../utils/constants";
 import Preloader from "../Preloader/Preloader";
+import useMovies from "../../hooks/MoviesHook";
 
 function App() {
   const { pathname } = useLocation();
@@ -23,18 +24,19 @@ function App() {
   const [isLogged, setIsLogged] = useState(false);
   const pathsOfHeader = ["/", "/movies", "/saved-movies", "/profile"];
   const [savedFilms, setSavedFilms] = useState([]);
-  const [filteredFilms, setFilteredFilms] = useState([]);
   const [filteredSavedFilms, setFilteredSavedFilms] = useState([]);
-  const [isPreloaderLoading, setIsPreloaderLoading] = useState(false);
   const [isPageLoading, setIsPageLoading] = useState(false);
-  const [isShortFilmsChecked, setIsShortFilmsChecked] = useState(false);
-  const [isShortSavedFilmsChecked, setIsShortSavedFilmsChecked] =
-    useState(false);
-  const [isErrorOnLoadingFilms, setIsErrorOnLoadingFilms] = useState(false);
   const [registrationError, setRegistrationError] = useState("");
   const [authentificationError, setAuthenticationError] = useState("");
   const [editProfileMessage, setEditProfileMessage] = useState("");
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
+  const {
+    handleSetShortMovies,
+    handleSetSearchField,
+    movies,
+    areMoviesLoading,
+    errorFilms,
+  } = useMovies(moviesapi.getFilms());
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -140,77 +142,6 @@ function App() {
     navigate("/");
   }
 
-  // определить короткометражки или нет, в зависимости какая страница открыта, сохраненки или нет
-  function handleShortFilmsChecked() {
-    setIsPreloaderLoading(true);
-    if (location.pathname === "/saved-movies") {
-      console.log("saved");
-      setIsShortSavedFilmsChecked(!isShortSavedFilmsChecked);
-      if (isShortSavedFilmsChecked) {
-        setFilteredSavedFilms((prevFilteredFilms) =>
-          prevFilteredFilms.filter((film) => film.duration <= 40)
-        );
-        setIsPreloaderLoading(false);
-      } else {
-        setFilteredSavedFilms((prevFilteredFilms) =>
-          prevFilteredFilms.filter((film) => film.duration > 40)
-        );
-        setIsPreloaderLoading(false);
-      }
-    } else {
-      console.log("notsaved");
-      console.log(filteredFilms);
-      setIsShortFilmsChecked(!isShortFilmsChecked);
-      localStorage.setItem("shortChecked", isShortFilmsChecked);
-      if (isShortFilmsChecked) {
-        setFilteredFilms((prevFilteredFilms) =>
-          prevFilteredFilms.filter((film) => film.duration <= 40)
-        );
-        setIsPreloaderLoading(false);
-      } else {
-        setFilteredFilms((prevFilteredFilms) =>
-          prevFilteredFilms.filter((film) => film.duration > 40)
-        );
-        setIsPreloaderLoading(false);
-      }
-    }
-  }
-
-  // поиск фильмов
-  async function handleSearchFilms() {
-    setIsPreloaderLoading(true);
-    const filmName = localStorage.getItem("filmToSearch");
-
-    try {
-      if (!localStorage.getItem("allFilms")) {
-        const films = await moviesapi.getFilms();
-        localStorage.setItem("allFilms", JSON.stringify(films));
-      }
-
-      const allFilms = JSON.parse(localStorage.getItem("allFilms"));
-      const filteredFilms = allFilms.filter(
-        (film) =>
-          film.nameRU.toLowerCase().includes(filmName.toLowerCase()) ||
-          film.nameEN.toLowerCase().includes(filmName.toLowerCase())
-      );
-
-      setFilteredFilms(filteredFilms);
-      localStorage.setItem("foundFilms", JSON.stringify(filteredFilms));
-      setIsPreloaderLoading(false);
-    } catch (error) {
-      setIsErrorOnLoadingFilms(true);
-    }
-  }
-
-  function handleSearchSavedFilms(data) {
-    const filteredFilms = savedFilms.filter(
-      (film) =>
-        film.nameRU.toLowerCase().includes(data.filmName.toLowerCase()) ||
-        film.nameEN.toLowerCase().includes(data.filmName.toLowerCase())
-    );
-    setFilteredSavedFilms(filteredFilms);
-  }
-
   // при открытии страницы проверяется есть ли токен, если да, то получает информацию о пользователе,
   // а также сохраненные карточки, прошлый последний запрос
   useEffect(() => {
@@ -223,15 +154,6 @@ function App() {
           if (res) {
             setIsLogged(true);
             navigate(location.pathname);
-            if (localStorage.getItem("shortChecked")) {
-              setIsShortFilmsChecked(
-                JSON.parse(localStorage.getItem("shortChecked"))
-              );
-            }
-            const foundItems = JSON.parse(localStorage.getItem("foundFilms"));
-            if (foundItems) {
-              setFilteredFilms(foundItems);
-            }
           }
         })
         .catch((error) => {
@@ -289,19 +211,18 @@ function App() {
               element={
                 <ProtectedRoute
                   element={Movies}
-                  isShortFilmsChecked={isShortFilmsChecked}
-                  handleShortFilms={handleShortFilmsChecked}
-                  onSearchFilms={handleSearchFilms}
-                  filteredFilms={filteredFilms}
+                  handleShortFilms={handleSetShortMovies}
+                  onSearchFilms={handleSetSearchField}
+                  filteredFilms={movies}
                   savedFilms={savedFilms}
-                  isPreloaderLoading={isPreloaderLoading}
-                  isErrorOnLoadingFilms={isErrorOnLoadingFilms}
+                  isPreloaderLoading={areMoviesLoading}
+                  isErrorOnLoadingFilms={errorFilms}
                   handleLikeMovie={handleLikeMovie}
                   isLogged={isLogged}
                 />
               }
             ></Route>
-            <Route
+            {/*            <Route
               exact
               path="/saved-movies"
               element={
@@ -316,7 +237,7 @@ function App() {
                   filteredSavedFilms={filteredSavedFilms}
                 />
               }
-            ></Route>
+            ></Route>*/}
             <Route
               exact
               path="/profile"

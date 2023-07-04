@@ -5,8 +5,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 function SearchForm(props) {
-  const { values, handleChange, isValid, setValues, errors } =
-    useFormValidation();
+  const { values, handleChange, setValues } = useFormValidation();
 
   const location = useLocation();
 
@@ -33,8 +32,7 @@ function SearchForm(props) {
         if (!values.filmName) {
           return;
         }
-        localStorage.setItem("filmToSearch", values.filmName);
-        props.onSearchFilms(values);
+        props.onSearchFilms(values.filmName);
       }}
     >
       <label className="searchform__label">
@@ -53,11 +51,7 @@ function SearchForm(props) {
       </label>
 
       <label className="searchform__shortfilms">
-        <FilterCheckbox
-          handleChange={props.handleShortFilms}
-          isShortFilmsChecked={props.isShortFilmsChecked}
-          isShortSavedFilmsChecked={props.isShortSavedFilmsChecked}
-        ></FilterCheckbox>
+        <FilterCheckbox handleChange={props.handleShortFilms}></FilterCheckbox>
         <span>Короткометражки</span>
       </label>
       <button className="searchform__button"></button>

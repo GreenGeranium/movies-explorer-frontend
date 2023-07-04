@@ -25,7 +25,6 @@ function Movies(props) {
     <div className="movies">
       <SearchForm
         onSearchFilms={props.onSearchFilms}
-        isShortFilmsChecked={props.isShortFilmsChecked}
         handleShortFilms={props.handleShortFilms}
       ></SearchForm>
       <Preloader isPreloaderLoading={props.isPreloaderLoading}></Preloader>
@@ -35,7 +34,7 @@ function Movies(props) {
           или сервер недоступен. Подождите немного и попробуйте ещё раз
         </h4>
       )}
-      {props.filteredFilms.length === 0 ? (
+      {!props.filteredFilms ? (
         <h4 className="movies__error">Ничего не найдено</h4>
       ) : (
         <>

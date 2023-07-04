@@ -10,11 +10,14 @@ class MoviesApi {
   }
 
   //получение всех фильмов
-  getFilms() {
-    return fetch(MOVIES_API, {
+  await;
+
+  async getFilms() {
+    let res = await fetch(MOVIES_API, {
       headers: { "Content-Type": "application/json" },
       method: "GET",
-    }).then(this._getResponseData);
+    });
+    return this._getResponseData(res);
   }
 }
 
