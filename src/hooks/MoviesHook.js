@@ -5,11 +5,13 @@ const useMovies = (fetchMovies) => {
   const [areMoviesLoading, setAreMoviesLoading] = useState(false);
   const [errorFilms, setErrorFilms] = useState(null);
 
+  // введенное название фильма
   const [searchInput, setSearchInput] = useState("");
-
+  // выбраны ли короткометражки
   const [isShortChecked, setIsShortChecked] = useState(false);
 
   useEffect(() => {
+    // получение всех фильмов
     async function handleSearchAllFilms() {
       setAreMoviesLoading(true);
       try {
@@ -22,24 +24,21 @@ const useMovies = (fetchMovies) => {
       }
     }
 
-    // получаем все фильмы, если еще не было сделано
+    // если фильмы уже есть, то ничего не происходит
     if (movies) {
       return;
     }
     handleSearchAllFilms();
   }, []);
 
+  // фильтрация фильмов
   const filteredMovies = useMemo(() => {
-    const result = [];
-
-    // TODO ЛОКАЛ
-    /*    if (!searchInput) {
-      return JSON.parse(localStorage.getItem("foundFilms"));
-    }*/
-
+    // в случае, если первый рендер страницы, то берем фильмы из localstorage
     if (!searchInput && !movies) {
-      return;
+      return JSON.parse(localStorage.getItem("foundFilms"));
     }
+
+    const result = [];
 
     movies.forEach((movie) => {
       const isFilmShort = movie.duration <= 40;
@@ -69,13 +68,19 @@ const useMovies = (fetchMovies) => {
     localStorage.setItem("foundFilms", JSON.stringify(result));
 
     return result;
-  }, [searchInput, movies, isShortChecked]);
+  }, [searchInput, isShortChecked]);
 
+  // в случае неудачного поиска
+  const areFilmsNotFound =
+    (searchInput || isShortChecked) && filteredMovies.length === 0;
+
+  // установка значения поля ввода
   const handleSetSearchField = useCallback((value) => {
     setSearchInput(value);
     localStorage.setItem("filmToSearch", value);
   }, []);
 
+  // обработка нажатия по кнопке короткометражек
   const handleSetShortMovies = useCallback((event) => {
     setIsShortChecked(event.target.checked);
     localStorage.setItem("shortChecked", event.target.checked);
@@ -87,6 +92,7 @@ const useMovies = (fetchMovies) => {
     handleSetSearchField,
     areMoviesLoading,
     errorFilms,
+    areFilmsNotFound,
   };
 };
 

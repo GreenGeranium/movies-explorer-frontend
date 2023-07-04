@@ -24,20 +24,11 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isLogged, setIsLogged] = useState(false);
   const pathsOfHeader = ["/", "/movies", "/saved-movies", "/profile"];
-  const [savedFilms, setSavedFilms] = useState([]);
-  const [filteredSavedFilms, setFilteredSavedFilms] = useState([]);
   const [isPageLoading, setIsPageLoading] = useState(false);
   const [registrationError, setRegistrationError] = useState("");
   const [authentificationError, setAuthenticationError] = useState("");
   const [editProfileMessage, setEditProfileMessage] = useState("");
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
-  const {
-    handleSetShortMovies,
-    handleSetSearchField,
-    movies,
-    areMoviesLoading,
-    errorFilms,
-  } = useMovies(moviesapi.getFilms());
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -55,7 +46,17 @@ function App() {
     handleSetShortSavedMovies,
     handleSetSearchSavedField,
     handleLikeMovie,
+    areSavedFilmsNotFound,
   } = useSavedMovies(mainapi);
+
+  const {
+    handleSetShortMovies,
+    handleSetSearchField,
+    movies,
+    areMoviesLoading,
+    errorFilms,
+    areFilmsNotFound,
+  } = useMovies(moviesapi.getFilms());
 
   // регистрация аккаунта
   function handleRegister(data) {
@@ -184,6 +185,7 @@ function App() {
                   isErrorOnLoadingFilms={errorFilms}
                   handleLikeMovie={handleLikeMovie}
                   isLogged={isLogged}
+                  areFilmsNotFound={areFilmsNotFound}
                 />
               }
             ></Route>
@@ -197,8 +199,8 @@ function App() {
                   handleLikeMovie={handleLikeMovie}
                   savedFilms={savedMovies}
                   onSearchFilms={handleSetSearchSavedField}
-                  filteredSavedFilms={filteredSavedFilms}
                   handleShortFilms={handleSetShortSavedMovies}
+                  areFilmsNotFound={areSavedFilmsNotFound}
                 />
               }
             ></Route>

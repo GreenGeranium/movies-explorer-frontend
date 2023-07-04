@@ -9,11 +9,15 @@ function SavedMovies(props) {
         onSearchFilms={props.onSearchFilms}
         handleShortFilms={props.handleShortFilms}
       ></SearchForm>
-      <MoviesCardList
-        films={props.savedFilms}
-        handleLikeMovie={props.handleLikeMovie}
-        savedFilms={props.savedFilms}
-      ></MoviesCardList>
+      {props.areFilmsNotFound ? (
+        <h4 className="movies__error">Ничего не найдено</h4>
+      ) : (
+        <MoviesCardList
+          films={props.savedFilms}
+          handleLikeMovie={props.handleLikeMovie}
+          savedFilms={props.savedFilms}
+        ></MoviesCardList>
+      )}
     </div>
   );
 }

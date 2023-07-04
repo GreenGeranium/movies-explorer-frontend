@@ -2,11 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 const useSavedMovies = (fetchSavedMovies) => {
   const [savedMovies, setSavedMovies] = useState(null);
-
   const [searchInput, setSearchInput] = useState("");
-
   const [isShortChecked, setIsShortChecked] = useState(false);
 
+  // получаем сохраненные фильмы, если еще не было сделано
   useEffect(() => {
     async function handleSetSavedMovies() {
       try {
@@ -17,13 +16,13 @@ const useSavedMovies = (fetchSavedMovies) => {
       }
     }
 
-    // получаем все фильмы, если еще не было сделано
     if (savedMovies) {
       return;
     }
     handleSetSavedMovies();
   }, []);
 
+  // фильтрация фильмов
   const filteredMovies = useMemo(() => {
     const result = [];
 
@@ -60,6 +59,9 @@ const useSavedMovies = (fetchSavedMovies) => {
 
     return result;
   }, [isShortChecked, savedMovies, searchInput]);
+
+  const areFilmsNotFound =
+    (searchInput || isShortChecked) && filteredMovies.length === 0;
 
   const handleSetSearchSavedField = useCallback((value) => {
     setSearchInput(value);
@@ -104,6 +106,7 @@ const useSavedMovies = (fetchSavedMovies) => {
     handleSetSearchSavedField,
     savedMovies: filteredMovies,
     handleLikeMovie,
+    areSavedFilmsNotFound: areFilmsNotFound,
   };
 };
 

@@ -34,7 +34,7 @@ function Movies(props) {
           или сервер недоступен. Подождите немного и попробуйте ещё раз
         </h4>
       )}
-      {!props.filteredFilms ? (
+      {props.areFilmsNotFound ? (
         <h4 className="movies__error">Ничего не найдено</h4>
       ) : (
         <>
