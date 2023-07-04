@@ -7,22 +7,13 @@ function SavedMovies(props) {
     <div className="savedmovies">
       <SearchForm
         onSearchFilms={props.onSearchFilms}
-        isShortSavedFilmsChecked={props.isShortSavedFilmsChecked}
         handleShortFilms={props.handleShortFilms}
       ></SearchForm>
-      {props.filteredSavedFilms.length > 0 ? (
-        <MoviesCardList
-          films={props.filteredSavedFilms}
-          handleLikeMovie={props.handleLikeMovie}
-          savedFilms={props.savedFilms}
-        ></MoviesCardList>
-      ) : (
-        <MoviesCardList
-          films={props.savedFilms}
-          handleLikeMovie={props.handleLikeMovie}
-          savedFilms={props.savedFilms}
-        ></MoviesCardList>
-      )}
+      <MoviesCardList
+        films={props.savedFilms}
+        handleLikeMovie={props.handleLikeMovie}
+        savedFilms={props.savedFilms}
+      ></MoviesCardList>
     </div>
   );
 }

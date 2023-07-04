@@ -17,6 +17,7 @@ import MainApi from "../../utils/MainApi";
 import { MAIN_API } from "../../utils/constants";
 import Preloader from "../Preloader/Preloader";
 import useMovies from "../../hooks/MoviesHook";
+import useSavedMovies from "../../hooks/SavedMoviesHook";
 
 function App() {
   const { pathname } = useLocation();
@@ -48,6 +49,10 @@ function App() {
       "Content-Type": "application/json",
     },
   });
+
+  const { savedMovies, handleSetShortSavedMovies, handleSetSearchSavedField } =
+    useSavedMovies(mainapi);
+
   // лайк карточке или удаление лайка
   function handleLikeMovie(data, isLiked) {
     if (isLiked) {
@@ -169,22 +174,13 @@ function App() {
     }
   }, []);
 
-  // установка пользователя при авторизации и сохранненых карточек
+  // установка пользователя при авторизации и сохраненных карточках
   useEffect(() => {
     if (isLogged) {
       mainapi
         .getUserInformation()
         .then((data) => {
           setCurrentUser(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      mainapi
-        .getSavedMovies()
-        .then((data) => {
-          setSavedFilms(data);
         })
         .catch((error) => {
           console.log(error);
@@ -214,7 +210,7 @@ function App() {
                   handleShortFilms={handleSetShortMovies}
                   onSearchFilms={handleSetSearchField}
                   filteredFilms={movies}
-                  savedFilms={savedFilms}
+                  savedFilms={savedMovies}
                   isPreloaderLoading={areMoviesLoading}
                   isErrorOnLoadingFilms={errorFilms}
                   handleLikeMovie={handleLikeMovie}
@@ -222,22 +218,21 @@ function App() {
                 />
               }
             ></Route>
-            {/*            <Route
+            <Route
               exact
               path="/saved-movies"
               element={
                 <ProtectedRoute
                   isLogged={isLogged}
                   element={SavedMovies}
-                  savedFilms={savedFilms}
-                  onSearchFilms={handleSearchSavedFilms}
                   handleLikeMovie={handleLikeMovie}
-                  isShortSavedFilmsChecked={isShortSavedFilmsChecked}
-                  handleShortFilms={handleShortFilmsChecked}
+                  savedFilms={savedMovies}
+                  onSearchFilms={handleSetSearchSavedField}
                   filteredSavedFilms={filteredSavedFilms}
+                  handleShortFilms={handleSetShortSavedMovies}
                 />
               }
-            ></Route>*/}
+            ></Route>
             <Route
               exact
               path="/profile"

@@ -1,47 +1,38 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-const useMovies = (fetchMovies) => {
-  const [movies, setMovies] = useState(null);
-  const [areMoviesLoading, setAreMoviesLoading] = useState(false);
-  const [errorFilms, setErrorFilms] = useState(null);
+const useSavedMovies = (fetchSavedMovies) => {
+  const [savedMovies, setSavedMovies] = useState(null);
 
   const [searchInput, setSearchInput] = useState("");
 
   const [isShortChecked, setIsShortChecked] = useState(false);
 
   useEffect(() => {
-    async function handleSearchAllFilms() {
-      setAreMoviesLoading(true);
+    async function handleSetSavedMovies() {
       try {
-        const movies = await fetchMovies;
-        setMovies(movies);
+        const movies = await fetchSavedMovies.getSavedMovies();
+        setSavedMovies(movies);
       } catch (error) {
-        setErrorFilms(error);
-      } finally {
-        setAreMoviesLoading(false);
+        console.log(error);
       }
     }
 
     // получаем все фильмы, если еще не было сделано
-    if (movies) {
+    if (savedMovies) {
       return;
     }
-    handleSearchAllFilms();
+    handleSetSavedMovies();
   }, []);
 
   const filteredMovies = useMemo(() => {
     const result = [];
 
-    // TODO ЛОКАЛ
-    /*    if (!searchInput) {
-      return JSON.parse(localStorage.getItem("foundFilms"));
-    }*/
-
-    if (!searchInput && !movies) {
-      return;
+    if (!searchInput && !isShortChecked) {
+      return savedMovies;
     }
+    console.log(savedMovies);
 
-    movies.forEach((movie) => {
+    savedMovies.forEach((movie) => {
       const isFilmShort = movie.duration <= 40;
       const isFilmFound =
         movie.nameRU.toLowerCase().includes(searchInput.toLowerCase()) ||
@@ -69,25 +60,21 @@ const useMovies = (fetchMovies) => {
     localStorage.setItem("foundFilms", JSON.stringify(result));
 
     return result;
-  }, [searchInput, movies, isShortChecked]);
+  }, [isShortChecked, savedMovies, searchInput]);
 
-  const handleSetSearchField = useCallback((value) => {
+  const handleSetSearchSavedField = useCallback((value) => {
     setSearchInput(value);
-    localStorage.setItem("filmToSearch", value);
   }, []);
 
-  const handleSetShortMovies = useCallback((event) => {
+  const handleSetShortSavedMovies = useCallback((event) => {
     setIsShortChecked(event.target.checked);
-    localStorage.setItem("shortChecked", event.target.checked);
   }, []);
 
   return {
-    movies: filteredMovies,
-    handleSetShortMovies,
-    handleSetSearchField,
-    areMoviesLoading,
-    errorFilms,
+    handleSetShortSavedMovies,
+    handleSetSearchSavedField,
+    savedMovies: filteredMovies,
   };
 };
 
-export default useMovies;
+export default useSavedMovies;

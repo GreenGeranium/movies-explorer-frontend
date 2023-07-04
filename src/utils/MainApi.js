@@ -23,8 +23,8 @@ class MainApi {
   }
 
   // получение сохраненных фильмов
-  getSavedMovies() {
-    return fetch(`${this._baseUrl}/movies`, {
+  async getSavedMovies() {
+    return await fetch(`${this._baseUrl}/movies`, {
       method: "GET",
       headers: this._headers,
     }).then(this._getResponseData);

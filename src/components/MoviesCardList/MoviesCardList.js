@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 
 function MoviesCardList(props) {
   const { pathname } = useLocation();
+
   return (
     <ul className="movieslist">
       {(pathname === "/movies" || pathname === "/saved-movies") &&
