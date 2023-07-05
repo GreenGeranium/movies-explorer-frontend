@@ -139,7 +139,6 @@ function App() {
           setIsPageLoading(false);
         });
     } else {
-      navigate("/signin");
       setIsPageLoading(false);
     }
   }, []);

@@ -41,18 +41,21 @@ function Movies(props) {
           <MoviesCardList
             handleLikeMovie={props.handleLikeMovie}
             savedFilms={props.savedFilms}
-            films={props.filteredFilms.slice(0, cardsPerPage)}
+            films={
+              props.filteredFilms && props.filteredFilms.slice(0, cardsPerPage)
+            }
           ></MoviesCardList>
-          {props.filteredFilms.length >= cardsPerPage && (
-            <button
-              className="movies__showmore"
-              onClick={() => {
-                setCardsPerPage(cardsPerPage + cardsPerAdditionalLine);
-              }}
-            >
-              Ещё
-            </button>
-          )}
+          {props.filteredFilms &&
+            props.filteredFilms.length >= cardsPerPage && (
+              <button
+                className="movies__showmore"
+                onClick={() => {
+                  setCardsPerPage(cardsPerPage + cardsPerAdditionalLine);
+                }}
+              >
+                Ещё
+              </button>
+            )}
         </>
       )}
     </div>

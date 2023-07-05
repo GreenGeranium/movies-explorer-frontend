@@ -29,12 +29,13 @@ const useMovies = (fetchMovies) => {
       return;
     }
     handleSearchAllFilms();
-  }, []);
+  }, [fetchMovies]);
 
   // фильтрация фильмов
   const filteredMovies = useMemo(() => {
     // в случае, если первый рендер страницы, то берем фильмы из localstorage
     if (!searchInput && !movies) {
+      /*setSearchInput(localStorage.getItem("filmToSearch"));*/
       return JSON.parse(localStorage.getItem("foundFilms"));
     }
 

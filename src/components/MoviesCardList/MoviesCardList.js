@@ -8,6 +8,7 @@ function MoviesCardList(props) {
   return (
     <ul className="movieslist">
       {(pathname === "/movies" || pathname === "/saved-movies") &&
+        props.films &&
         props.films.map((film) => {
           return (
             <MoviesCard
