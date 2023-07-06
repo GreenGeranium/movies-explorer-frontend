@@ -4,17 +4,15 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import LogoIcon from "../LogoIcon/LogoIcon";
 import { useState } from "react";
 
-function Header() {
+function Header(props) {
   //открытие и закрытие бургера
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const { pathname } = useLocation();
 
   return (
     <>
-      {(pathname === "/movies" ||
-        pathname === "/saved-movies" ||
-        pathname === "/profile") && (
-        <header className="header header_type_movies">
+      {props.isLogged ? (
+        <header className={`header ${pathname === "/" && "header_type_main"}`}>
           <LogoIcon></LogoIcon>
           <div className="links links_type_movies">
             <NavLink to="/movies" className="links__movie">
@@ -65,9 +63,8 @@ function Header() {
             <div className="header__supplement"></div>
           </div>
         </header>
-      )}
-      {pathname === "/" && (
-        <header className="header">
+      ) : (
+        <header className={`header ${pathname === "/" && "header_type_main"}`}>
           <LogoIcon></LogoIcon>
           <div className="links">
             <Link to="/signup" className="links__register">

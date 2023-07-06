@@ -27,7 +27,12 @@ function Portfolio() {
           </a>
         </li>
         <li className="portfolio__link">
-          <Link className="text-link" to={"/movies"}>
+          <Link
+            className="text-link"
+            target="_blank"
+            rel="noreferrer"
+            to={"//react-mesto-auth-lemon.vercel.app/#/sign-in"}
+          >
             Одностраничное приложение
           </Link>
         </li>

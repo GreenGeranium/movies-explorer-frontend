@@ -1,13 +1,24 @@
 import "./MoviesCardList.scss";
 import MoviesCard from "../MoviesCard/MoviesCard";
+import { useLocation } from "react-router-dom";
 
-function MoviesCardList() {
+function MoviesCardList(props) {
+  const { pathname } = useLocation();
+
   return (
     <ul className="movieslist">
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
+      {(pathname === "/movies" || pathname === "/saved-movies") &&
+        props.films &&
+        props.films.map((film) => {
+          return (
+            <MoviesCard
+              key={film.id ? film.id : film._id}
+              data={film}
+              savedFilms={props.savedFilms}
+              handleLikeMovie={props.handleLikeMovie}
+            ></MoviesCard>
+          );
+        })}
     </ul>
   );
 }

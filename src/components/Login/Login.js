@@ -1,67 +1,70 @@
 import AuthForm from "../AuthForm/AuthForm";
-import { useForm } from "react-hook-form";
+import useFormValidation from "../../hooks/ValidationHook";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ mode: "all" });
+function Login(props) {
+  const { values, handleChange, isValid, errors, setIsValid } =
+    useFormValidation();
 
-  function onSubmit(data) {
-    console.log(data);
-  }
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsValid(false);
+  }, []);
+
+  //в случае если профиль
+  useEffect(() => {
+    props.isLogged && navigate("/movies");
+  }, [props.isLogged]);
 
   return (
     <AuthForm
       title="Рады видеть!"
       formName="login-form"
-      handleSubmit={handleSubmit(onSubmit)}
+      isFormValid={isValid}
+      handleSubmit={() => {
+        props.handleLogin(values);
+      }}
+      errorMessage={props.authentificationError}
+      isFormSubmitting={props.isFormSubmitting}
     >
       <label className="authform__label">
         <span className="authform__placeholder">E-mail</span>
         <input
-          {...register("email", {
-            required: "Поле обязательно",
-            pattern: {
-              value: /\w+@\w+\.\w+/gi,
-              message: "Неверный формат email",
-            },
-            minLength: {
-              value: 8,
-              message: "Минимальная длина - 8 символов",
-            },
-          })}
-          type="text"
+          onChange={handleChange}
+          required={true}
+          type="email"
           className={`authform__input ${
             errors.email && "authform__input_type_error"
           }`}
-          id="email-input"
+          id="email"
+          name="email"
           placeholder="Введите email"
+          value={values.email || ""}
+          disabled={props.isFormSubmitting}
         />
         {errors.email && (
-          <span className="authform__error">{errors.email.message}</span>
+          <span className="authform__error">{errors.email}</span>
         )}
       </label>
       <label className="authform__label">
         <span className="authform__placeholder">Пароль</span>
         <input
-          {...register("password", {
-            required: "Поле обязательно",
-            minLength: {
-              value: 8,
-              message: "Минимальная длина - 4 символов",
-            },
-          })}
           type="password"
+          required={true}
+          onChange={handleChange}
           className={`authform__input ${
             errors.password && "authform__input_type_error"
           }`}
-          id="password-input"
+          name="password"
+          id="password"
           placeholder="Введите пароль"
+          value={values.password || ""}
+          disabled={props.isFormSubmitting}
         />
         {errors.password && (
-          <span className="authform__error">{errors.password.message}</span>
+          <span className="authform__error">{errors.password}</span>
         )}
       </label>
     </AuthForm>

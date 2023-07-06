@@ -20,12 +20,24 @@ function AuthForm(props) {
         }}
       >
         {props.children}
+        <p className="authform__server-error">
+          {props.errorMessage.errorMessage}
+        </p>
         <button
+          disabled={!props.isFormValid || props.isFormSubmitting}
           className={`authform__button ${
             pathname === "/signup" ? "authform__button_type_register" : ""
+          } ${
+            props.isFormValid && !props.isFormSubmitting
+              ? "authform__button_type_valid"
+              : ""
           }`}
         >
-          {pathname === "/signin" ? "Войти" : "Зарегистрироваться"}
+          {props.isFormSubmitting
+            ? "Отправляется..."
+            : pathname === "/signin"
+            ? "Войти"
+            : "Зарегистрироваться"}
         </button>
         <p className="authform__redirect">
           {pathname === "/signin"

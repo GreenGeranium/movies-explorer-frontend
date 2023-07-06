@@ -24,4 +24,14 @@
       opacity: 0.8;
     }
   }
+
+  &__error {
+    margin: 100px 0 100px;
+    text-align: center;
+    color: white;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 114%;
+  }
 }
